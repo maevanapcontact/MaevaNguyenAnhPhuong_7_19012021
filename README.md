@@ -9,3 +9,7 @@ Build a searching algorithm in JavaScript
 - HTML5
 - SCSS
 - VanillaJS
+
+### Environment
+
+- Webpack
