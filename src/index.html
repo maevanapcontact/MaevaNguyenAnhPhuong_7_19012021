@@ -9,7 +9,75 @@
       integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+      integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+      crossorigin="anonymous"
+    />
     <title>Les petits plats</title>
   </head>
-  <body></body>
+  <body>
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+      <img
+        src="images/logo.png"
+        alt="Les petits plats"
+        width="512"
+        height="178"
+      />
+
+      <form action="index.html" method="POST" class="main-header__search">
+        <input type="text" id="search-bar" class="main-header__search--bar" />
+        <button
+          type="submit"
+          title="Rechercher"
+          class="main-header__search--btn"
+        >
+          <span class="fas fa-search"></span>
+        </button>
+      </form>
+
+      <div class="main-header__tags">
+        <button type="button" class="main-header__tags--btn">
+          tag 1<span class="far fa-times-circle"></span>
+        </button>
+        <button type="button" class="main-header__tags--btn">
+          tag 2<span class="far fa-times-circle"></span>
+        </button>
+        <button type="button" class="main-header__tags--btn">
+          tag 3<span class="far fa-times-circle"></span>
+        </button>
+      </div>
+
+      <div class="main-header__filters">
+        <form action="index.html" method="POST">
+          <div class="main-header__filters--elt">
+            <input
+              type="text"
+              value="Ingrédients"
+              class="main-header__filters--elt--1"
+            />
+            <span class="fas fa-chevron-down"></span>
+          </div>
+          <div class="main-header__filters--elt">
+            <input
+              type="text"
+              value="Appareils"
+              class="main-header__filters--elt--2"
+            />
+            <span class="fas fa-chevron-down"></span>
+          </div>
+          <div class="main-header__filters--elt">
+            <input
+              type="text"
+              value="Ustensiles"
+              class="main-header__filters--elt--3"
+            />
+            <span class="fas fa-chevron-down"></span>
+          </div>
+        </form>
+      </div>
+    </header>
+  </body>
 </html>
