@@ -4,6 +4,10 @@
   padding: 40px 20px;
   margin: auto;
 
+  @media (min-width: 1440px) {
+    padding: 40px 100px;
+  }
+
   img {
     width: 268px;
     height: auto;
