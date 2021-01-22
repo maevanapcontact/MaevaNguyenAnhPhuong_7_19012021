@@ -6,6 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: stretch;
 
   @media (min-width: 1440px) {
     justify-content: space-between;
@@ -18,9 +19,21 @@
   max-width: 380px;
   border-radius: 5px;
   margin: 0 20px 50px 20px;
+  align-self: stretch;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  }
 
   @media (min-width: 1440px) {
     margin: 0 0 50px 0;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   &-img {
@@ -34,6 +47,7 @@
     padding: 20px;
     background: $light-grey;
     border-radius: 0 0 5px 5px;
+    flex-grow: 1;
 
     header {
       display: flex;
@@ -61,7 +75,7 @@
     display: inline-block;
     width: 50%;
     vertical-align: top;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     padding-right: 5px;
   }
 }

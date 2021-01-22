@@ -1,3 +1,4 @@
 import "../scss/main.scss";
+import { createRecipes } from "./dom-creation";
 
-console.log("Hello world!");
+createRecipes();
