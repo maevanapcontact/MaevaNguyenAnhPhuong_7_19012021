@@ -143,6 +143,7 @@
   top: 65px;
   border-radius: 0 0 5px 5px;
   padding: 10px;
+  display: none;
 
   &-1 {
     background: $primary-color;
@@ -184,4 +185,8 @@
 
 .filter-tag {
   color: #fff;
+}
+
+.filters-all.open {
+  display: block;
 }
