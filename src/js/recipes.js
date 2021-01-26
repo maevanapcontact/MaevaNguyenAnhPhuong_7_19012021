@@ -18,6 +18,13 @@ const createRecipes = () => {
   );
 };
 
+const createFilteredRecipes = (recipesList) => {
+  mainContentElt.innerHTML = "";
+  recipesList.forEach((recipe) =>
+    mainContentElt.appendChild(createRecipeElt(recipe))
+  );
+};
+
 /**
  * Creates a single DOM recipe element
  *
@@ -54,4 +61,4 @@ const createRecipeElt = (recipe) => {
   return elt;
 };
 
-export { createRecipes };
+export { createRecipes, createFilteredRecipes };

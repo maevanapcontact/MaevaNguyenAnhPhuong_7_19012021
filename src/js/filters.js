@@ -1,4 +1,5 @@
 import data from "./data";
+import { createFilteredRecipes } from "./recipes";
 import { createLinkElement } from "./utils";
 
 /**
@@ -79,7 +80,7 @@ const fillsIngredientsTagsObj = () => {
   data.recipes.forEach((recipe) => {
     recipe.ingredients.forEach((elt) => {
       const objKey = elt.ingredient.toLowerCase();
-      ingredientsTagObj[objKey].push(recipe.id);
+      ingredientsTagObj[objKey].push(recipe);
     });
   });
 
@@ -96,7 +97,7 @@ const fillsAppliancesTagsObj = () => {
 
   data.recipes.forEach((recipe) => {
     const objKey = recipe.appliance.toLowerCase();
-    appliancesTagsObj[objKey].push(recipe.id);
+    appliancesTagsObj[objKey].push(recipe);
   });
 
   return appliancesTagsObj;
@@ -113,7 +114,7 @@ const fillsUstensilsTagsObj = () => {
   data.recipes.forEach((recipe) => {
     recipe.ustensils.forEach((elt) => {
       const objKey = elt.toLowerCase();
-      ustensilsTagsObj[objKey].push(recipe.id);
+      ustensilsTagsObj[objKey].push(recipe);
     });
   });
 
@@ -125,8 +126,10 @@ const fillsUstensilsTagsObj = () => {
  *
  * @return  {void}
  */
-const fillSpecificFilter = (filterList, filterElt) => {
+const fillSpecificFilter = (filterList, filterElt, listId) => {
   const ulElt = document.createElement("ul");
+  ulElt.setAttribute("id", listId);
+  ulElt.addEventListener("click", manageClickOnTag);
 
   filterList.forEach((item) => {
     const liElt = document.createElement("li");
@@ -139,6 +142,36 @@ const fillSpecificFilter = (filterList, filterElt) => {
   filterElt.appendChild(ulElt);
 };
 
+const manageClickOnTag = (evt) => {
+  const target = evt.target;
+  let tag = "";
+  let list = "";
+
+  if (target.tagName === "A") {
+    tag = target.textContent;
+    list = target.parentNode.parentNode.id;
+  }
+  if (target.tagName === "LI") {
+    tag = target.childNodes[0].textContent;
+    list = target.parentNode.id;
+  }
+  if (target.tagName === "UL") {
+    tag = target.childNodes[0].childNodes[0].textContent;
+    list = target.id;
+  }
+
+  filterByTags(tag, list);
+};
+
+const filterByTags = (tag, list) => {
+  let tagList = [];
+  if (list === "list-ingredients") tagList = fillsIngredientsTagsObj()[tag];
+  if (list === "list-appliances") tagList = fillsAppliancesTagsObj()[tag];
+  if (list === "list-ustensils") tagList = fillsUstensilsTagsObj()[tag];
+
+  createFilteredRecipes(tagList);
+};
+
 /**
  * Fill the DOM with all the filter tags
  *
@@ -149,13 +182,17 @@ const fillAllFilters = () => {
   const filterApplianceElt = document.getElementById("filters-all-2");
   const filterUstensilsElt = document.getElementById("filters-all-3");
 
-  fillSpecificFilter(getAllIngredients(), filterIngredientsElt);
-  fillSpecificFilter(getAllApplicances(), filterApplianceElt);
-  fillSpecificFilter(getAllUstensils(), filterUstensilsElt);
-
-  console.log(fillsIngredientsTagsObj());
-  console.log(fillsAppliancesTagsObj());
-  console.log(fillsUstensilsTagsObj());
+  fillSpecificFilter(
+    getAllIngredients(),
+    filterIngredientsElt,
+    "list-ingredients"
+  );
+  fillSpecificFilter(
+    getAllApplicances(),
+    filterApplianceElt,
+    "list-appliances"
+  );
+  fillSpecificFilter(getAllUstensils(), filterUstensilsElt, "list-ustensils");
 };
 
 export { fillAllFilters };
