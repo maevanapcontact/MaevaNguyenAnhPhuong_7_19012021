@@ -1,6 +1,6 @@
 import data from "./data";
 import { createFilteredRecipes } from "./recipes";
-import { createLinkElement } from "./utils";
+import { createLinkElement, createElementWithClassName } from "./utils";
 
 /**
  * Get the list of all ingredients without repetition
@@ -142,7 +142,15 @@ const fillSpecificFilter = (filterList, filterElt, listId) => {
   filterElt.appendChild(ulElt);
 };
 
+/**
+ * Get the correct data from the click to filter by tags
+ *
+ * @param   {object}  evt  Browser event
+ *
+ * @return  {void}
+ */
 const manageClickOnTag = (evt) => {
+  const tagsElt = document.getElementById("tags");
   const target = evt.target;
   let tag = "";
   let list = "";
@@ -161,8 +169,17 @@ const manageClickOnTag = (evt) => {
   }
 
   filterByTags(tag, list);
+  tagsElt.appendChild(displaySelectedFilter(tag));
 };
 
+/**
+ * Generate the filtered array of recipes to create them in the DOM
+ *
+ * @param   {string}  tag   The tag clicked on
+ * @param   {string}  list  The name of the list that gets the tag
+ *
+ * @return  {void}
+ */
 const filterByTags = (tag, list) => {
   let tagList = [];
   if (list === "list-ingredients") tagList = fillsIngredientsTagsObj()[tag];
@@ -193,6 +210,35 @@ const fillAllFilters = () => {
     "list-appliances"
   );
   fillSpecificFilter(getAllUstensils(), filterUstensilsElt, "list-ustensils");
+};
+
+/**
+ * Creates the tag DOM element
+ *
+ * @param   {string}  tag  The tag clicked on
+ *
+ * @return  {object}       The created DOM tag
+ */
+const displaySelectedFilter = (tag) => {
+  const elt = createElementWithClassName("button", "tag");
+  elt.setAttribute("type", "button");
+  const spanElt = createElementWithClassName("span", "far fa-times-circle");
+  spanElt.addEventListener("click", removeFilter);
+  elt.textContent = tag;
+  elt.appendChild(spanElt);
+
+  return elt;
+};
+
+/**
+ * Removes the filter tag clicked on
+ *
+ * @param   {object}  evt  Browser event
+ *
+ * @return  {void}
+ */
+const removeFilter = (evt) => {
+  evt.target.parentNode.remove();
 };
 
 export { fillAllFilters };
