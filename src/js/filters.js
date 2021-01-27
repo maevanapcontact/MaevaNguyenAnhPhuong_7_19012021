@@ -133,7 +133,7 @@ const fillSpecificFilter = (filterList, filterElt, listId) => {
 
   filterList.forEach((item) => {
     const liElt = document.createElement("li");
-    const aElt = createLinkElement("#", item, "filter-tag");
+    const aElt = createLinkElement("/", item, "filter-tag");
     aElt.textContent = item;
     liElt.appendChild(aElt);
     ulElt.appendChild(liElt);
@@ -150,6 +150,7 @@ const fillSpecificFilter = (filterList, filterElt, listId) => {
  * @return  {void}
  */
 const manageClickOnTag = (evt) => {
+  evt.preventDefault();
   const tagsElt = document.getElementById("tags");
   const target = evt.target;
   let tag = "";
@@ -170,6 +171,7 @@ const manageClickOnTag = (evt) => {
 
   filterByTags(tag, list);
   tagsElt.appendChild(displaySelectedFilter(tag));
+  addTagsToURL(tag, list);
 };
 
 /**
@@ -239,6 +241,46 @@ const displaySelectedFilter = (tag) => {
  */
 const removeFilter = (evt) => {
   evt.target.parentNode.remove();
+};
+
+/**
+ * Get the list of given parameters from URL
+ *
+ * @param   {string}  param  The parameter to get the list of
+ *
+ * @return  {array}          The list of elements for the given parameter
+ */
+const getParamFromURL = (param) => {
+  return new URL(window.location.href).searchParams.getAll(param);
+};
+
+/**
+ * Add a new parameter on the URL (ing, app, ust)
+ *
+ * @param   {string}  tagToAdd  The parameter value to add in the URL
+ * @param   {string}  list      The name of the list from which the parameter comes from
+ *
+ * @return  {void}
+ */
+const addTagsToURL = (tagToAdd, list) => {
+  if (!tagToAdd) return;
+  const formattedTag = tagToAdd.replaceAll(" ", "_");
+  let url = window.location.href;
+  let param = "";
+
+  if (list === "list-ingredients") param = "ing";
+  if (list === "list-appliances") param = "app";
+  if (list === "list-ustensils") param = "ust";
+
+  let tagParams = getParamFromURL(param);
+
+  if (tagParams.includes(formattedTag)) return;
+  else {
+    if (tagParams.length === 0) url += `?${param}=${formattedTag}`;
+    else url += `&${param}=${formattedTag}`;
+  }
+
+  window.history.pushState({}, "", url);
 };
 
 export { fillAllFilters };
