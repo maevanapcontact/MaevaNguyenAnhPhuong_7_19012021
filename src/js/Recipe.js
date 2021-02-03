@@ -9,12 +9,16 @@ export default class Recipe {
     this.ustensils = data.ustensils;
   }
 
+  getName() {
+    return this.name;
+  }
+
   createsRecipeElement() {
     const elt = document.createElement("article");
     elt.className = "recipe";
     const aElt = document.createElement("a");
     aElt.setAttribute("href", "index.html");
-    aElt.setAttribute("title", this.name);
+    aElt.setAttribute("title", getName());
     const imgElt = document.createElement("div");
     imgElt.className = "recipe-img";
     const dataElt = document.createElement("div");
