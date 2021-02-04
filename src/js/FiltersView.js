@@ -6,7 +6,7 @@ export default class FiltersView {
     this.filtersView = document.getElementById("filters");
     this.data = new DataLogic();
     this.ingredientsFilter = new Filter(
-      "ingredient",
+      "ingredients",
       "Ingrédients",
       this.data.getAllIngredients()
     );
@@ -30,5 +30,25 @@ export default class FiltersView {
     this.filtersView.appendChild(ingredientsElt);
     this.filtersView.appendChild(appliancesElt);
     this.filtersView.appendChild(ustensilsElt);
+
+    ingredientsElt.addEventListener("click", this.toggleFilterList);
+    appliancesElt.addEventListener("click", this.toggleFilterList);
+    ustensilsElt.addEventListener("click", this.toggleFilterList);
+  }
+
+  toggleFilterList(evt) {
+    const ingredientsList = document.getElementById("ingredients-filter");
+    const appliancesList = document.getElementById("appliances-filter");
+    const ustensilsList = document.getElementById("ustensils-filter");
+
+    const targetId = evt.target.id;
+    evt.target.className =
+      evt.target.className === "fas fa-chevron-down"
+        ? "fas fa-chevron-up"
+        : "fas fa-chevron-down";
+    if (targetId === "ingredients-btn")
+      ingredientsList.classList.toggle("open");
+    if (targetId === "appliances-btn") appliancesList.classList.toggle("open");
+    if (targetId === "ustensils-btn") ustensilsList.classList.toggle("open");
   }
 }
