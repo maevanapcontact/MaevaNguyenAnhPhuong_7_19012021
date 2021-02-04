@@ -1,17 +1,16 @@
 import data from "./data";
-import Recipe from "./Recipe";
-
-const mainContent = document.getElementById("main-content");
+import RecipesView from "./RecipesView";
 
 export default class Main {
-  initialize() {
-    this.createsListOfRecipes();
+  constructor() {
+    this.recipesView = new RecipesView(data.recipes);
   }
 
-  createsListOfRecipes() {
-    data.recipes.forEach((recipe) => {
-      const elt = new Recipe(recipe);
-      mainContent.appendChild(elt.createsRecipeElement());
-    });
+  initialize() {
+    this.displayRecipesList();
+  }
+
+  displayRecipesList() {
+    this.recipesView.displayRecipesList();
   }
 }

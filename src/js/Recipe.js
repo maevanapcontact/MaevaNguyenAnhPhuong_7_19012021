@@ -1,3 +1,5 @@
+import Ingredient from "./Ingredient";
+
 export default class Recipe {
   constructor(data) {
     this.id = data.id;
@@ -9,16 +11,12 @@ export default class Recipe {
     this.ustensils = data.ustensils;
   }
 
-  getName() {
-    return this.name;
-  }
-
-  createsRecipeElement() {
+  createRecipeElement() {
     const elt = document.createElement("article");
     elt.className = "recipe";
     const aElt = document.createElement("a");
     aElt.setAttribute("href", "index.html");
-    aElt.setAttribute("title", getName());
+    aElt.setAttribute("title", this.name);
     const imgElt = document.createElement("div");
     imgElt.className = "recipe-img";
     const dataElt = document.createElement("div");
@@ -35,14 +33,7 @@ export default class Recipe {
     const ulElt = document.createElement("ul");
 
     this.ingredients.forEach((ingredient) => {
-      const liElt = document.createElement("li");
-      liElt.innerHTML = `<strong>${ingredient.ingredient}`;
-      liElt.innerHTML += ingredient.quantity
-        ? ` : </strong><span>${ingredient.quantity}`
-        : `</strong>`;
-      liElt.innerHTML += ingredient.unit
-        ? ` ${ingredient.unit}</span>`
-        : `</span>`;
+      const liElt = new Ingredient(ingredient).createIngredient();
       ulElt.appendChild(liElt);
     });
 
