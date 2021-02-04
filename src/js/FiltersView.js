@@ -42,10 +42,12 @@ export default class FiltersView {
     const ustensilsList = document.getElementById("ustensils-filter");
 
     const targetId = evt.target.id;
-    evt.target.className =
-      evt.target.className === "fas fa-chevron-down"
-        ? "fas fa-chevron-up"
-        : "fas fa-chevron-down";
+    if (evt.target.tagName === "SPAN") {
+      evt.target.className =
+        evt.target.className === "fas fa-chevron-down"
+          ? "fas fa-chevron-up"
+          : "fas fa-chevron-down";
+    }
     if (targetId === "ingredients-btn")
       ingredientsList.classList.toggle("open");
     if (targetId === "appliances-btn") appliancesList.classList.toggle("open");

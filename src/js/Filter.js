@@ -4,7 +4,7 @@ export default class Filter {
   constructor(id, name, list) {
     this.id = id;
     this.name = name;
-    this.tags = new Tags(list);
+    this.tags = new Tags(id, list);
   }
 
   createFilterElement() {
