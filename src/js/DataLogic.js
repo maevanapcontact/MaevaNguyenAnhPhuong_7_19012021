@@ -5,6 +5,10 @@ export default class DataLogic {
     this.initialData = data.recipes;
   }
 
+  getInitialData() {
+    return this.initialData;
+  }
+
   getAllIngredients() {
     let ingredients = [];
     this.initialData.forEach((recipe) => {

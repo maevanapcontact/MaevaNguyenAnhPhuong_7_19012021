@@ -76,6 +76,7 @@
     width: 100%;
     position: relative;
     margin: 0 0 10px 0;
+    border-radius: 5px;
 
     &:nth-child(2) {
       @media (min-width: 600px) {
@@ -107,16 +108,43 @@
       }
     }
 
-    &-1 {
+    &:nth-child(1) {
       background: $primary-color;
+
+      & > div,
+      & > input {
+        background: $primary-color;
+      }
+
+      li:hover {
+        background-color: darken($primary-color, 20%);
+      }
     }
 
-    &-2 {
+    &:nth-child(2) {
       background: $secondary-color;
+
+      & > div,
+      & > input {
+        background: $secondary-color;
+      }
+
+      li:hover {
+        background-color: darken($secondary-color, 20%);
+      }
     }
 
-    &-3 {
+    &:nth-child(3) {
       background: $tertiary-color;
+
+      & > div,
+      & > input {
+        background: $tertiary-color;
+      }
+
+      li:hover {
+        background-color: darken($tertiary-color, 20%);
+      }
     }
 
     span {
@@ -133,40 +161,16 @@
       }
     }
   }
-}
 
-.filters-all {
-  width: 100%;
-  position: absolute;
-  z-index: 5;
-  left: 0;
-  top: 65px;
-  border-radius: 0 0 5px 5px;
-  padding: 10px;
-  display: block;
-
-  &-1 {
-    background: $primary-color;
-
-    li:hover {
-      background-color: darken($primary-color, 20%);
-    }
-  }
-
-  &-2 {
-    background: $secondary-color;
-
-    li:hover {
-      background-color: darken($secondary-color, 20%);
-    }
-  }
-
-  &-3 {
-    background: $tertiary-color;
-
-    li:hover {
-      background-color: darken($tertiary-color, 20%);
-    }
+  .filters-all {
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    top: 65px;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
+    display: block;
   }
 
   li {

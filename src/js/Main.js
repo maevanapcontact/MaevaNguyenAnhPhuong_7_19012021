@@ -1,27 +1,24 @@
-import data from "./data";
-import RecipesView from "./RecipesView";
 import DataLogic from "./DataLogic";
-import TagsView from "./TagsView";
+import RecipesView from "./RecipesView";
+import FiltersView from "./FiltersView";
 
 export default class Main {
   constructor() {
-    this.recipesView = new RecipesView(data.recipes);
-    this.recipesData = new DataLogic();
-    this.tagsView = new TagsView();
+    this.data = new DataLogic();
+    this.recipesView = new RecipesView(this.data.getInitialData());
+    this.filtersView = new FiltersView();
   }
 
   initialize() {
     this.displayRecipesList();
-    this.displayFilterTags();
+    this.displayFiltersElements();
   }
 
   displayRecipesList() {
     this.recipesView.displayRecipesList();
   }
 
-  displayFilterTags() {
-    this.tagsView.displayIngredientsTags(this.recipesData.getAllIngredients());
-    this.tagsView.displayAppliancesTags(this.recipesData.getAllApplicances());
-    this.tagsView.displayUstensilsList(this.recipesData.getAllUstensils());
+  displayFiltersElements() {
+    this.filtersView.displayAllFilters();
   }
 }
