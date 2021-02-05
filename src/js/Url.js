@@ -1,8 +1,8 @@
 export default class Url {
-  constructor(ingParams, appParams, ustParams) {
-    this.ingParams = ingParams;
-    this.appParams = appParams;
-    this.ustParams = ustParams;
+  constructor() {
+    this.ingParams = [];
+    this.appParams = [];
+    this.ustParams = [];
   }
 
   getParamFromURL(param) {
@@ -50,10 +50,10 @@ export default class Url {
     this.setAppParams(app);
     this.setUstParams(ust);
     const allParams = this.getAllParams();
-    if (allParams.length === 0) return;
 
     let url = window.location.href;
     url = url.split("index.html")[0];
+    if (allParams.length === 0) url += "index.html";
 
     allParams.forEach((param, index) => {
       if (index === 0) url += `index.html?${param.type}=${param.name}`;

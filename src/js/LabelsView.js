@@ -9,49 +9,15 @@ export default class LabelsView {
     this.url = new Url();
   }
 
-  getParamFromURL(param) {
-    return new URL(window.location.href).searchParams.getAll(param);
-  }
-
   displayAllLabels() {
     this.labelsView.innerHTML = "";
-    const ingredientsParams = this.getParamFromURL("ing");
-    const appliancesParams = this.getParamFromURL("app");
-    const ustensilsParams = this.getParamFromURL("ust");
+    const ingredientsParams = this.url.getParamFromURL("ing");
+    const appliancesParams = this.url.getParamFromURL("app");
+    const ustensilsParams = this.url.getParamFromURL("ust");
 
-    const ingredientsOriginalName = this.getLabelOriginalName(
-      ingredientsParams,
-      this.data.getAllIngredients
-    );
-    const appliancesOriginalName = this.getLabelOriginalName(
-      appliancesParams,
-      this.data.getAllApplicances
-    );
-    const ustensilsOriginalName = this.getLabelOriginalName(
-      ustensilsParams,
-      this.data.getAllUstensils
-    );
-
-    this.labelsView.appendChild(
-      this.createLabels(ingredientsOriginalName, "ing")
-    );
-    this.labelsView.appendChild(
-      this.createLabels(appliancesOriginalName, "app")
-    );
-    this.labelsView.appendChild(
-      this.createLabels(ustensilsOriginalName, "ust")
-    );
-  }
-
-  getLabelOriginalName(paramsArray, getTags) {
-    const originalData = getTags();
-    let originalNamesArray = [];
-    originalData.forEach((elt) => {
-      paramsArray.forEach((param) => {
-        if (param === elt.formattedName) originalNamesArray.push(elt.name);
-      });
-    });
-    return originalNamesArray;
+    this.labelsView.appendChild(this.createLabels(ingredientsParams, "ing"));
+    this.labelsView.appendChild(this.createLabels(appliancesParams, "app"));
+    this.labelsView.appendChild(this.createLabels(ustensilsParams, "ust"));
   }
 
   createLabels(labelsList, type) {

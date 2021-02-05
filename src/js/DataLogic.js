@@ -46,27 +46,15 @@ export default class DataLogic {
     return ustensils;
   }
 
-  createArrayOfObjects(getTagArray) {
-    let tagArray = getTagArray();
-    tagArray = tagArray.map((item) => ({
-      name: item,
-      formattedName: item
-        .replaceAll(" ", "_")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, ""),
-    }));
-    return tagArray;
-  }
-
   getAllIngredients() {
-    return this.createArrayOfObjects(this.createIngredientArray);
+    return this.createIngredientArray();
   }
 
   getAllApplicances() {
-    return this.createArrayOfObjects(this.createAppliancesArray);
+    return this.createAppliancesArray();
   }
 
   getAllUstensils() {
-    return this.createArrayOfObjects(this.createUstensilsArray);
+    return this.createUstensilsArray();
   }
 }

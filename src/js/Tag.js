@@ -2,13 +2,12 @@ import LabelsView from "./LabelsView";
 import Url from "./Url";
 
 export default class Tag {
-  constructor(type, name, formattedName) {
+  constructor(type, name) {
     this.name = name;
     this.type = type;
-    this.formattedName = formattedName;
     this.labelsView = new LabelsView();
     this.url = new Url();
-    this.addTagInURL = this.addTagInURL.bind(this);
+    this.addClickedTag = this.addClickedTag.bind(this);
   }
 
   createTagElt() {
@@ -19,28 +18,28 @@ export default class Tag {
     aElt.className = "filter-tag";
     aElt.textContent = this.name;
     liElt.appendChild(aElt);
-    liElt.addEventListener("click", this.addTagInURL);
+    liElt.addEventListener("click", this.addClickedTag);
 
     return liElt;
   }
 
-  getParamFromURL(param) {
-    return new URL(window.location.href).searchParams.getAll(param);
-  }
-
-  addTagInURL(evt) {
+  addClickedTag(evt) {
     evt.preventDefault();
+    const formattedName = this.name
+      .replaceAll(" ", "_")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
     let ingParams = this.url.getParamFromURL("ing");
     let appParams = this.url.getParamFromURL("app");
     let ustParams = this.url.getParamFromURL("ust");
 
-    if (this.type === "ingredients" && !ingParams.includes(this.formattedName))
-      ingParams.push(this.formattedName);
-    if (this.type === "appliances" && !appParams.includes(this.formattedName))
-      appParams.push(this.formattedName);
-    if (this.type === "ustensils" && !ustParams.includes(this.formattedName))
-      ustParams.push(this.formattedName);
+    if (this.type === "ingredients" && !ingParams.includes(formattedName))
+      ingParams.push(formattedName);
+    if (this.type === "appliances" && !appParams.includes(formattedName))
+      appParams.push(formattedName);
+    if (this.type === "ustensils" && !ustParams.includes(formattedName))
+      ustParams.push(formattedName);
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
 

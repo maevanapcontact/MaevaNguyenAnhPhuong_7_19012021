@@ -9,7 +9,7 @@ export default class Tags {
   createTagsList() {
     const elt = document.createElement("ul");
     this.list.forEach((item) => {
-      const tag = new Tag(this.type, item.name, item.formattedName);
+      const tag = new Tag(this.type, item);
       elt.appendChild(tag.createTagElt());
     });
     return elt;
