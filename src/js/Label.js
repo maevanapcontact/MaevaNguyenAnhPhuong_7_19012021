@@ -21,5 +21,7 @@ export default class Label {
   removeFilter(evt) {
     evt.preventDefault();
     evt.target.parentNode.remove();
+    let url = window.location.href;
+    console.log(url);
   }
 }

@@ -6,6 +6,9 @@ export default class DataLogic {
     this.createIngredientArray = this.createIngredientArray.bind(this);
     this.createAppliancesArray = this.createAppliancesArray.bind(this);
     this.createUstensilsArray = this.createUstensilsArray.bind(this);
+    this.getAllIngredients = this.getAllIngredients.bind(this);
+    this.getAllApplicances = this.getAllApplicances.bind(this);
+    this.getAllUstensils = this.getAllUstensils.bind(this);
   }
 
   getInitialData() {

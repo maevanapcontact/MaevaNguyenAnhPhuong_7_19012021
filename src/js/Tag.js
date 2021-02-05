@@ -1,8 +1,11 @@
+import LabelsView from "./LabelsView";
+
 export default class Tag {
   constructor(type, name, formattedName) {
     this.name = name;
     this.type = type;
     this.formattedName = formattedName;
+    this.labelsView = new LabelsView();
     this.addTagInURL = this.addTagInURL.bind(this);
   }
 
@@ -45,12 +48,14 @@ export default class Tag {
         appParams.length === 0 &&
         ustParams.length === 0
       ) {
-        url += `?${currentParamName}=${formattedTag}`;
+        if (url.includes("index.html?"))
+          url += `${currentParamName}=${formattedTag}`;
+        else url += `?${currentParamName}=${formattedTag}`;
       } else {
         url += `&${currentParamName}=${formattedTag}`;
       }
     }
-
     window.history.pushState({}, "", url);
+    this.labelsView.displayAllLabels();
   }
 }
