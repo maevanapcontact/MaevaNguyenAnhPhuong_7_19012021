@@ -1,7 +1,8 @@
 export default class Tag {
-  constructor(type, name) {
+  constructor(type, name, formattedName) {
     this.name = name;
     this.type = type;
+    this.formattedName = formattedName;
     this.addTagInURL = this.addTagInURL.bind(this);
   }
 
@@ -24,10 +25,7 @@ export default class Tag {
 
   addTagInURL(evt) {
     evt.preventDefault();
-    let formattedTag = this.name
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
-    formattedTag = formattedTag.replace(/[^a-zA-Z0-9]/g, "");
+    let formattedTag = this.formattedName;
     let url = window.location.href;
     let currentParamName = "";
 

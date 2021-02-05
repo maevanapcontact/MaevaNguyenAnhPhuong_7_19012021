@@ -3,13 +3,16 @@ import data from "./data";
 export default class DataLogic {
   constructor() {
     this.initialData = data.recipes;
+    this.createIngredientArray = this.createIngredientArray.bind(this);
+    this.createAppliancesArray = this.createAppliancesArray.bind(this);
+    this.createUstensilsArray = this.createUstensilsArray.bind(this);
   }
 
   getInitialData() {
     return this.initialData;
   }
 
-  getAllIngredients() {
+  createIngredientArray() {
     let ingredients = [];
     this.initialData.forEach((recipe) => {
       recipe.ingredients.forEach((ing) => {
@@ -20,7 +23,7 @@ export default class DataLogic {
     return ingredients;
   }
 
-  getAllApplicances() {
+  createAppliancesArray() {
     let appliances = [];
     this.initialData.forEach((recipe) => {
       if (!appliances.includes(recipe.appliance.toLowerCase()))
@@ -29,7 +32,7 @@ export default class DataLogic {
     return appliances;
   }
 
-  getAllUstensils() {
+  createUstensilsArray() {
     let ustensils = [];
     this.initialData.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
@@ -38,5 +41,29 @@ export default class DataLogic {
       });
     });
     return ustensils;
+  }
+
+  createArrayOfObjects(getTagArray) {
+    let tagArray = getTagArray();
+    tagArray = tagArray.map((item) => ({
+      name: item,
+      formattedName: item
+        .replaceAll(" ", "_")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""),
+    }));
+    return tagArray;
+  }
+
+  getAllIngredients() {
+    return this.createArrayOfObjects(this.createIngredientArray);
+  }
+
+  getAllApplicances() {
+    return this.createArrayOfObjects(this.createAppliancesArray);
+  }
+
+  getAllUstensils() {
+    return this.createArrayOfObjects(this.createUstensilsArray);
   }
 }

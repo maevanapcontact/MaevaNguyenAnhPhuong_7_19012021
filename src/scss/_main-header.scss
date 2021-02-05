@@ -46,11 +46,12 @@
   }
 }
 
-.tags {
+.labels {
   margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
 
   button {
-    background: $primary-color;
     border: none;
     color: #fff;
     font-weight: 500;
@@ -67,6 +68,18 @@
       margin-left: 10px;
     }
   }
+}
+
+.label.ing {
+  background: $primary-color;
+}
+
+.label.app {
+  background: $secondary-color;
+}
+
+.label.ust {
+  background: $tertiary-color;
 }
 
 .filters {
