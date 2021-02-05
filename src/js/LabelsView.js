@@ -1,10 +1,12 @@
 import DataLogic from "./DataLogic";
 import Label from "./Label";
+import Url from "./Url";
 
 export default class LabelsView {
   constructor() {
     this.labelsView = document.getElementById("labels");
     this.data = new DataLogic();
+    this.url = new Url();
   }
 
   getParamFromURL(param) {

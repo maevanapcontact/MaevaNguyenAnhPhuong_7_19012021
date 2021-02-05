@@ -1,4 +1,5 @@
 import LabelsView from "./LabelsView";
+import Url from "./Url";
 
 export default class Tag {
   constructor(type, name, formattedName) {
@@ -6,6 +7,7 @@ export default class Tag {
     this.type = type;
     this.formattedName = formattedName;
     this.labelsView = new LabelsView();
+    this.url = new Url();
     this.addTagInURL = this.addTagInURL.bind(this);
   }
 
@@ -28,34 +30,20 @@ export default class Tag {
 
   addTagInURL(evt) {
     evt.preventDefault();
-    let formattedTag = this.formattedName;
-    let url = window.location.href;
-    let currentParamName = "";
 
-    if (this.type === "ingredients") currentParamName = "ing";
-    if (this.type === "appliances") currentParamName = "app";
-    if (this.type === "ustensils") currentParamName = "ust";
+    let ingParams = this.url.getParamFromURL("ing");
+    let appParams = this.url.getParamFromURL("app");
+    let ustParams = this.url.getParamFromURL("ust");
 
-    const ingParams = this.getParamFromURL("ing");
-    const appParams = this.getParamFromURL("app");
-    const ustParams = this.getParamFromURL("ust");
-    const currentParams = this.getParamFromURL(currentParamName);
+    if (this.type === "ingredients" && !ingParams.includes(this.formattedName))
+      ingParams.push(this.formattedName);
+    if (this.type === "appliances" && !appParams.includes(this.formattedName))
+      appParams.push(this.formattedName);
+    if (this.type === "ustensils" && !ustParams.includes(this.formattedName))
+      ustParams.push(this.formattedName);
 
-    if (currentParams.includes(formattedTag)) return;
-    else {
-      if (
-        ingParams.length === 0 &&
-        appParams.length === 0 &&
-        ustParams.length === 0
-      ) {
-        if (url.includes("index.html?"))
-          url += `${currentParamName}=${formattedTag}`;
-        else url += `?${currentParamName}=${formattedTag}`;
-      } else {
-        url += `&${currentParamName}=${formattedTag}`;
-      }
-    }
-    window.history.pushState({}, "", url);
+    this.url.addParamsToUrl(ingParams, appParams, ustParams);
+
     this.labelsView.displayAllLabels();
   }
 }

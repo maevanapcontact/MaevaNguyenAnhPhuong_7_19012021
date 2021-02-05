@@ -1,0 +1,64 @@
+export default class Url {
+  constructor(ingParams, appParams, ustParams) {
+    this.ingParams = ingParams;
+    this.appParams = appParams;
+    this.ustParams = ustParams;
+  }
+
+  getParamFromURL(param) {
+    return new URL(window.location.href).searchParams.getAll(param);
+  }
+
+  setIngParams(ing) {
+    this.ingParams = ing;
+  }
+
+  setAppParams(app) {
+    this.appParams = app;
+  }
+
+  setUstParams(ust) {
+    this.ustParams = ust;
+  }
+
+  formatParamName(param) {
+    return param
+      .replaceAll(" ", "_")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  getAllParams() {
+    const ingArray = this.ingParams.map((elt) => ({
+      type: "ing",
+      name: this.formatParamName(elt),
+    }));
+    const appArray = this.appParams.map((elt) => ({
+      type: "app",
+      name: this.formatParamName(elt),
+    }));
+    const ustArray = this.ustParams.map((elt) => ({
+      type: "ust",
+      name: this.formatParamName(elt),
+    }));
+
+    return ingArray.concat(appArray).concat(ustArray);
+  }
+
+  addParamsToUrl(ing, app, ust) {
+    this.setIngParams(ing);
+    this.setAppParams(app);
+    this.setUstParams(ust);
+    const allParams = this.getAllParams();
+    if (allParams.length === 0) return;
+
+    let url = window.location.href;
+    url = url.split("index.html")[0];
+
+    allParams.forEach((param, index) => {
+      if (index === 0) url += `index.html?${param.type}=${param.name}`;
+      else url += `&${param.type}=${param.name}`;
+    });
+    window.history.pushState({}, "", url);
+  }
+}
