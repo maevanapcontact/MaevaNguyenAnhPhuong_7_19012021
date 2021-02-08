@@ -9,6 +9,14 @@ export default class Url {
     return new URL(window.location.href).searchParams.getAll(param);
   }
 
+  getAllParamsFromUrl() {
+    const ingParams = new URL(window.location.href).searchParams.getAll("ing");
+    const appParams = new URL(window.location.href).searchParams.getAll("app");
+    const ustParams = new URL(window.location.href).searchParams.getAll("ust");
+
+    return ingParams.concat(appParams).concat(ustParams);
+  }
+
   setIngParams(ing) {
     this.ingParams = ing;
   }

@@ -3,9 +3,6 @@ import data from "./data";
 export default class DataLogic {
   constructor() {
     this.initialData = data.recipes;
-    this.createIngredientArray = this.createIngredientArray.bind(this);
-    this.createAppliancesArray = this.createAppliancesArray.bind(this);
-    this.createUstensilsArray = this.createUstensilsArray.bind(this);
     this.getAllIngredients = this.getAllIngredients.bind(this);
     this.getAllApplicances = this.getAllApplicances.bind(this);
     this.getAllUstensils = this.getAllUstensils.bind(this);
@@ -15,7 +12,7 @@ export default class DataLogic {
     return this.initialData;
   }
 
-  createIngredientArray() {
+  getAllIngredients() {
     let ingredients = [];
     this.initialData.forEach((recipe) => {
       recipe.ingredients.forEach((ing) => {
@@ -26,7 +23,7 @@ export default class DataLogic {
     return ingredients;
   }
 
-  createAppliancesArray() {
+  getAllApplicances() {
     let appliances = [];
     this.initialData.forEach((recipe) => {
       if (!appliances.includes(recipe.appliance.toLowerCase()))
@@ -35,7 +32,7 @@ export default class DataLogic {
     return appliances;
   }
 
-  createUstensilsArray() {
+  getAllUstensils() {
     let ustensils = [];
     this.initialData.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
@@ -49,39 +46,76 @@ export default class DataLogic {
   createFormattedNameArray(list) {
     const formattedArray = list.map((item) => ({
       name: item,
-      formattedName: item
-        .replaceAll(" ", "_")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, ""),
+      formattedName: this.formatDataTag(item),
     }));
 
     return formattedArray;
   }
 
+  formatDataTag(tag) {
+    return tag
+      .replaceAll(" ", "_")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
   getFormattedIngredients() {
-    const ingredientsArray = this.createIngredientArray();
+    const ingredientsArray = this.getAllIngredients();
     return this.createFormattedNameArray(ingredientsArray);
   }
 
   getFormattedAppliances() {
-    const appliancesArray = this.createAppliancesArray();
+    const appliancesArray = this.getAllApplicances();
     return this.createFormattedNameArray(appliancesArray);
   }
 
   getFormattedUstensils() {
-    const ustensilsArray = this.createUstensilsArray();
+    const ustensilsArray = this.getAllUstensils();
     return this.createFormattedNameArray(ustensilsArray);
   }
 
-  getAllIngredients() {
-    return this.createIngredientArray();
+  createTagObject(getTagList) {
+    let tagObj = {};
+    const tagList = getTagList();
+    tagList.forEach((tag) => (tagObj[this.formatDataTag(tag)] = []));
+
+    return tagObj;
   }
 
-  getAllApplicances() {
-    return this.createAppliancesArray();
+  getIngredientsObject() {
+    let ingredientsTagObj = this.createTagObject(this.getAllIngredients);
+
+    this.initialData.forEach((recipe) => {
+      recipe.ingredients.forEach((elt) => {
+        const objKey = this.formatDataTag(elt.ingredient.toLowerCase());
+        ingredientsTagObj[objKey].push(recipe);
+      });
+    });
+
+    return ingredientsTagObj;
   }
 
-  getAllUstensils() {
-    return this.createUstensilsArray();
+  getAppliancesObject() {
+    let appliancesTagsObj = this.createTagObject(this.getAllApplicances);
+
+    this.initialData.forEach((recipe) => {
+      const objKey = this.formatDataTag(recipe.appliance.toLowerCase());
+      appliancesTagsObj[objKey].push(recipe);
+    });
+
+    return appliancesTagsObj;
+  }
+
+  getUstensilsObject() {
+    let ustensilsTagsObj = this.createTagObject(this.getAllUstensils);
+
+    this.initialData.forEach((recipe) => {
+      recipe.ustensils.forEach((elt) => {
+        const objKey = this.formatDataTag(elt.toLowerCase());
+        ustensilsTagsObj[objKey].push(recipe);
+      });
+    });
+
+    return ustensilsTagsObj;
   }
 }
