@@ -8,17 +8,17 @@ export default class FiltersView {
     this.ingredientsFilter = new Filter(
       "ingredients",
       "Ingrédients",
-      this.data.getAllIngredients()
+      this.data.getFormattedIngredients()
     );
     this.appliancesFilter = new Filter(
       "appliances",
       "Appareils",
-      this.data.getAllApplicances()
+      this.data.getFormattedAppliances()
     );
     this.ustensilsFilter = new Filter(
       "ustensils",
       "Ustensiles",
-      this.data.getAllUstensils()
+      this.data.getFormattedUstensils()
     );
   }
 

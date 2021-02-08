@@ -46,6 +46,33 @@ export default class DataLogic {
     return ustensils;
   }
 
+  createFormattedNameArray(list) {
+    const formattedArray = list.map((item) => ({
+      name: item,
+      formattedName: item
+        .replaceAll(" ", "_")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""),
+    }));
+
+    return formattedArray;
+  }
+
+  getFormattedIngredients() {
+    const ingredientsArray = this.createIngredientArray();
+    return this.createFormattedNameArray(ingredientsArray);
+  }
+
+  getFormattedAppliances() {
+    const appliancesArray = this.createAppliancesArray();
+    return this.createFormattedNameArray(appliancesArray);
+  }
+
+  getFormattedUstensils() {
+    const ustensilsArray = this.createUstensilsArray();
+    return this.createFormattedNameArray(ustensilsArray);
+  }
+
   getAllIngredients() {
     return this.createIngredientArray();
   }

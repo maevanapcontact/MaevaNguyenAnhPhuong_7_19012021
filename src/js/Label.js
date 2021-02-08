@@ -1,3 +1,4 @@
+import DataLogic from "./DataLogic";
 import Url from "./Url";
 
 export default class Label {
@@ -5,6 +6,7 @@ export default class Label {
     this.name = name;
     this.type = type;
     this.url = new Url();
+    this.data = new DataLogic();
     this.removeFilter = this.removeFilter.bind(this);
   }
 
@@ -15,29 +17,42 @@ export default class Label {
     const iconElt = document.createElement("span");
     iconElt.className = "far fa-times-circle";
     iconElt.addEventListener("click", this.removeFilter);
-    elt.textContent = this.name;
+    const originalName = this.getOriginalName(this.name, this.type);
+    elt.textContent =
+      originalName.charAt(0).toUpperCase() + originalName.slice(1);
     elt.appendChild(iconElt);
 
     return elt;
   }
 
+  getOriginalName(param, type) {
+    if (type === "ing")
+      return this.data
+        .getFormattedIngredients()
+        .find((elt) => elt.formattedName === param).name;
+    if (type === "app")
+      return this.data
+        .getFormattedAppliances()
+        .find((elt) => elt.formattedName === param).name;
+    if (type === "ust")
+      return this.data
+        .getFormattedUstensils()
+        .find((elt) => elt.formattedName === param).name;
+  }
+
   removeFilter(evt) {
     evt.preventDefault();
-    const formattedName = this.name
-      .replaceAll(" ", "_")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
 
     let ingParams = this.url.getParamFromURL("ing");
     let appParams = this.url.getParamFromURL("app");
     let ustParams = this.url.getParamFromURL("ust");
 
     if (this.type === "ing")
-      ingParams = ingParams.filter((elt) => elt !== formattedName);
+      ingParams = ingParams.filter((elt) => elt !== this.name);
     if (this.type === "app")
-      appParams = appParams.filter((elt) => elt !== formattedName);
+      appParams = appParams.filter((elt) => elt !== this.name);
     if (this.type === "ust")
-      ustParams = ustParams.filter((elt) => elt !== formattedName);
+      ustParams = ustParams.filter((elt) => elt !== this.name);
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
     evt.target.parentNode.remove();

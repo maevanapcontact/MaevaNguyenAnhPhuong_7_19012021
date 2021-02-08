@@ -2,8 +2,9 @@ import LabelsView from "./LabelsView";
 import Url from "./Url";
 
 export default class Tag {
-  constructor(type, name) {
-    this.name = name;
+  constructor(type, tag) {
+    this.name = tag.name;
+    this.formattedName = tag.formattedName;
     this.type = type;
     this.labelsView = new LabelsView();
     this.url = new Url();
@@ -25,21 +26,17 @@ export default class Tag {
 
   addClickedTag(evt) {
     evt.preventDefault();
-    const formattedName = this.name
-      .replaceAll(" ", "_")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
 
     let ingParams = this.url.getParamFromURL("ing");
     let appParams = this.url.getParamFromURL("app");
     let ustParams = this.url.getParamFromURL("ust");
 
-    if (this.type === "ingredients" && !ingParams.includes(formattedName))
-      ingParams.push(formattedName);
-    if (this.type === "appliances" && !appParams.includes(formattedName))
-      appParams.push(formattedName);
-    if (this.type === "ustensils" && !ustParams.includes(formattedName))
-      ustParams.push(formattedName);
+    if (this.type === "ingredients" && !ingParams.includes(this.formattedName))
+      ingParams.push(this.formattedName);
+    if (this.type === "appliances" && !appParams.includes(this.formattedName))
+      appParams.push(this.formattedName);
+    if (this.type === "ustensils" && !ustParams.includes(this.formattedName))
+      ustParams.push(this.formattedName);
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
 
