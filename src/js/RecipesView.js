@@ -1,4 +1,5 @@
 import DataLogic from "./DataLogic";
+import FiltersView from "./FiltersView";
 import Recipe from "./Recipe";
 import Url from "./Url";
 
@@ -6,6 +7,7 @@ export default class RecipesView {
   constructor() {
     this.dataLogic = new DataLogic();
     this.url = new Url();
+    this.filtersView = new FiltersView();
     this.recipesList = this.dataLogic.getInitialDataId();
     this.recipesView = document.getElementById("main-content");
   }
@@ -65,6 +67,33 @@ export default class RecipesView {
     return fullRecipes;
   }
 
+  getIngTagsFromRecipes() {
+    const ingredients = this.dataLogic.getIngredients(
+      this.getFullRecipesFromId()
+    );
+    return this.dataLogic.createFormattedNameArray(ingredients);
+  }
+
+  getAppTagsFromRecipes() {
+    const appliances = this.dataLogic.getAppliances(
+      this.getFullRecipesFromId()
+    );
+    return this.dataLogic.createFormattedNameArray(appliances);
+  }
+
+  getUstTagsFromRecipes() {
+    const ustensils = this.dataLogic.getUstensils(this.getFullRecipesFromId());
+    return this.dataLogic.createFormattedNameArray(ustensils);
+  }
+
+  updateAllTagsFromRecipes() {
+    const ingTags = this.getIngTagsFromRecipes();
+    const appTags = this.getAppTagsFromRecipes();
+    const ustTags = this.getUstTagsFromRecipes();
+
+    this.filtersView.updateAllTagsLists(ingTags, appTags, ustTags);
+  }
+
   displayRecipesList() {
     this.cleanRecipesView();
     this.setRecipesListFromUrlParams();
@@ -73,5 +102,6 @@ export default class RecipesView {
       const elt = new Recipe(recipe);
       this.recipesView.appendChild(elt.createRecipeElement());
     });
+    this.updateAllTagsFromRecipes();
   }
 }

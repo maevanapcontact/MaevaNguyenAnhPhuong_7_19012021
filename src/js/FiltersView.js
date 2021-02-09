@@ -53,4 +53,21 @@ export default class FiltersView {
     if (targetId === "appliances-btn") appliancesList.classList.toggle("open");
     if (targetId === "ustensils-btn") ustensilsList.classList.toggle("open");
   }
+
+  updateTagsListElt(id, filter, list) {
+    const tagsElt = document.getElementById(id);
+    tagsElt.innerHTML = "";
+    const listElt = filter.createTagsListElt(list);
+    tagsElt.appendChild(listElt);
+  }
+
+  updateAllTagsLists(ingList, appList, ustList) {
+    this.updateTagsListElt(
+      "ingredients-filter",
+      this.ingredientsFilter,
+      ingList
+    );
+    this.updateTagsListElt("appliances-filter", this.appliancesFilter, appList);
+    this.updateTagsListElt("ustensils-filter", this.ustensilsFilter, ustList);
+  }
 }

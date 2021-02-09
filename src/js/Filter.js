@@ -20,11 +20,7 @@ export default class Filter {
     listElt.className = "filters-all";
     listElt.setAttribute("id", `${this.type}-filter`);
 
-    const ulElt = document.createElement("ul");
-    this.tags.forEach((tag) => {
-      const tagElt = new Tag(this.type, tag);
-      ulElt.appendChild(tagElt.createTagElt());
-    });
+    const ulElt = this.createTagsListElt(this.tags);
     listElt.appendChild(ulElt);
 
     elt.appendChild(inputElt);
@@ -32,5 +28,14 @@ export default class Filter {
     elt.appendChild(listElt);
 
     return elt;
+  }
+
+  createTagsListElt(list) {
+    const ulElt = document.createElement("ul");
+    list.forEach((tag) => {
+      const tagElt = new Tag(this.type, tag);
+      ulElt.appendChild(tagElt.createTagElt());
+    });
+    return ulElt;
   }
 }

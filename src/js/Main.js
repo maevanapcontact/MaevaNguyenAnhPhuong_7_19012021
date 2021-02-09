@@ -10,9 +10,9 @@ export default class Main {
   }
 
   initialize() {
-    this.displayRecipesList();
     this.displayFiltersElements();
     this.displayLabelsElements();
+    this.displayRecipesList();
   }
 
   displayRecipesList() {

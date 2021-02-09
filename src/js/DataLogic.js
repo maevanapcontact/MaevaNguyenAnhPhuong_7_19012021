@@ -17,8 +17,20 @@ export default class DataLogic {
   }
 
   getAllIngredients() {
+    return this.getIngredients(this.initialData);
+  }
+
+  getAllApplicances() {
+    return this.getAppliances(this.initialData);
+  }
+
+  getAllUstensils() {
+    return this.getUstensils(this.initialData);
+  }
+
+  getIngredients(list) {
     let ingredients = [];
-    this.initialData.forEach((recipe) => {
+    list.forEach((recipe) => {
       recipe.ingredients.forEach((ing) => {
         if (!ingredients.includes(ing.ingredient.toLowerCase()))
           ingredients.push(ing.ingredient.toLowerCase());
@@ -27,18 +39,18 @@ export default class DataLogic {
     return ingredients;
   }
 
-  getAllApplicances() {
+  getAppliances(list) {
     let appliances = [];
-    this.initialData.forEach((recipe) => {
+    list.forEach((recipe) => {
       if (!appliances.includes(recipe.appliance.toLowerCase()))
         appliances.push(recipe.appliance.toLowerCase());
     });
     return appliances;
   }
 
-  getAllUstensils() {
+  getUstensils(list) {
     let ustensils = [];
-    this.initialData.forEach((recipe) => {
+    list.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
         if (!ustensils.includes(ustensil.toLowerCase()))
           ustensils.push(ustensil.toLowerCase());
