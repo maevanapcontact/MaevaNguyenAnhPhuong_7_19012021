@@ -1,3 +1,4 @@
+import FiltersView from "./FiltersView";
 import LabelsView from "./LabelsView";
 import RecipesView from "./RecipesView";
 import Url from "./Url";
@@ -10,6 +11,7 @@ export default class Tag {
     this.labelsView = new LabelsView();
     this.recipesView = new RecipesView();
     this.url = new Url();
+    this.filtersView = new FiltersView();
     this.addClickedTag = this.addClickedTag.bind(this);
   }
 
@@ -44,5 +46,6 @@ export default class Tag {
 
     this.labelsView.displayAllLabels();
     this.recipesView.displayRecipesList();
+    this.filtersView.closeAllFilterLists();
   }
 }

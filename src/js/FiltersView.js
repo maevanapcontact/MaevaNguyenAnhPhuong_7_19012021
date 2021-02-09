@@ -20,6 +20,7 @@ export default class FiltersView {
       "Ustensiles",
       this.data.getFormattedUstensils()
     );
+    this.toggleFilterList = this.toggleFilterList.bind(this);
   }
 
   displayAllFilters() {
@@ -37,21 +38,44 @@ export default class FiltersView {
   }
 
   toggleFilterList(evt) {
-    const ingredientsList = document.getElementById("ingredients-filter");
-    const appliancesList = document.getElementById("appliances-filter");
-    const ustensilsList = document.getElementById("ustensils-filter");
-
+    evt.preventDefault();
     const targetId = evt.target.id;
-    if (evt.target.tagName === "SPAN") {
-      evt.target.className =
-        evt.target.className === "fas fa-chevron-down"
-          ? "fas fa-chevron-up"
-          : "fas fa-chevron-down";
-    }
+    if (evt.target.tagName !== "SPAN") return;
+
+    let listElt;
     if (targetId === "ingredients-btn")
-      ingredientsList.classList.toggle("open");
-    if (targetId === "appliances-btn") appliancesList.classList.toggle("open");
-    if (targetId === "ustensils-btn") ustensilsList.classList.toggle("open");
+      listElt = document.getElementById("ingredients-filter");
+    if (targetId === "appliances-btn")
+      listElt = document.getElementById("appliances-filter");
+    if (targetId === "ustensils-btn")
+      listElt = document.getElementById("ustensils-filter");
+
+    if (evt.target.className === "fas fa-chevron-down")
+      this.openFilterList(listElt, targetId);
+    else this.closeAllFilterLists();
+  }
+
+  openFilterList(elt, buttonId) {
+    this.closeAllFilterLists();
+    elt.className += " open";
+    const buttonElt = document.getElementById(buttonId);
+    buttonElt.className = "fas fa-chevron-up";
+  }
+
+  closeAllFilterLists() {
+    const ingredientsListElt = document.getElementById("ingredients-filter");
+    const appliancesListElt = document.getElementById("appliances-filter");
+    const ustensilsListElt = document.getElementById("ustensils-filter");
+    ingredientsListElt.classList.remove("open");
+    appliancesListElt.classList.remove("open");
+    ustensilsListElt.classList.remove("open");
+
+    const ingredientsListBtn = document.getElementById("ingredients-btn");
+    const appliancesListBtn = document.getElementById("appliances-btn");
+    const ustensilsListBtn = document.getElementById("ustensils-btn");
+    ingredientsListBtn.className = "fas fa-chevron-down";
+    appliancesListBtn.className = "fas fa-chevron-down";
+    ustensilsListBtn.className = "fas fa-chevron-down";
   }
 
   updateTagsListElt(id, filter, list) {
