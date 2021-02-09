@@ -12,6 +12,10 @@ export default class DataLogic {
     return this.initialData;
   }
 
+  getInitialDataId() {
+    return this.initialData.map((elt) => elt.id);
+  }
+
   getAllIngredients() {
     let ingredients = [];
     this.initialData.forEach((recipe) => {
@@ -88,7 +92,7 @@ export default class DataLogic {
     this.initialData.forEach((recipe) => {
       recipe.ingredients.forEach((elt) => {
         const objKey = this.formatDataTag(elt.ingredient.toLowerCase());
-        ingredientsTagObj[objKey].push(recipe);
+        ingredientsTagObj[objKey].push(recipe.id);
       });
     });
 
@@ -100,7 +104,7 @@ export default class DataLogic {
 
     this.initialData.forEach((recipe) => {
       const objKey = this.formatDataTag(recipe.appliance.toLowerCase());
-      appliancesTagsObj[objKey].push(recipe);
+      appliancesTagsObj[objKey].push(recipe.id);
     });
 
     return appliancesTagsObj;
@@ -112,7 +116,7 @@ export default class DataLogic {
     this.initialData.forEach((recipe) => {
       recipe.ustensils.forEach((elt) => {
         const objKey = this.formatDataTag(elt.toLowerCase());
-        ustensilsTagsObj[objKey].push(recipe);
+        ustensilsTagsObj[objKey].push(recipe.id);
       });
     });
 

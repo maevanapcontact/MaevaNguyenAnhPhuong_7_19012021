@@ -1,4 +1,5 @@
 import LabelsView from "./LabelsView";
+import RecipesView from "./RecipesView";
 import Url from "./Url";
 
 export default class Tag {
@@ -7,6 +8,7 @@ export default class Tag {
     this.formattedName = tag.formattedName;
     this.type = type;
     this.labelsView = new LabelsView();
+    this.recipesView = new RecipesView();
     this.url = new Url();
     this.addClickedTag = this.addClickedTag.bind(this);
   }
@@ -41,5 +43,6 @@ export default class Tag {
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
 
     this.labelsView.displayAllLabels();
+    this.recipesView.displayRecipesList();
   }
 }

@@ -1,4 +1,5 @@
 import DataLogic from "./DataLogic";
+import RecipesView from "./RecipesView";
 import Url from "./Url";
 
 export default class Label {
@@ -7,6 +8,7 @@ export default class Label {
     this.type = type;
     this.url = new Url();
     this.data = new DataLogic();
+    this.recipesView = new RecipesView();
     this.removeFilter = this.removeFilter.bind(this);
   }
 
@@ -55,6 +57,7 @@ export default class Label {
       ustParams = ustParams.filter((elt) => elt !== this.name);
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
+    this.recipesView.displayRecipesList();
     evt.target.parentNode.remove();
   }
 }

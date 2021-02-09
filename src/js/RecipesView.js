@@ -6,7 +6,7 @@ export default class RecipesView {
   constructor() {
     this.dataLogic = new DataLogic();
     this.url = new Url();
-    this.recipesList = this.dataLogic.getInitialData();
+    this.recipesList = this.dataLogic.getInitialDataId();
     this.recipesView = document.getElementById("main-content");
   }
 
@@ -20,33 +20,58 @@ export default class RecipesView {
 
   setRecipesListFromUrlParams() {
     if (this.url.getAllParamsFromUrl().length === 0)
-      this.setRecipesList(this.dataLogic.getInitialData());
+      this.setRecipesList(this.dataLogic.getInitialDataId());
     else {
+      let recipesList = [];
       const ingParam = this.url.getParamFromURL("ing");
       const appParam = this.url.getParamFromURL("app");
       const ustParam = this.url.getParamFromURL("ust");
 
-      this.getRecipesFromParam(ingParam, "ing");
-      this.getRecipesFromParam(appParam, "app");
-      this.getRecipesFromParam(ustParam, "ust");
+      recipesList = this.getRecipesIdFromParam(ingParam, "ing", recipesList);
+      recipesList = this.getRecipesIdFromParam(appParam, "app", recipesList);
+      recipesList = this.getRecipesIdFromParam(ustParam, "ust", recipesList);
+
+      this.setRecipesList(recipesList);
     }
   }
 
-  getRecipesFromParam(params, type) {
+  getRecipesIdFromParam(params, type, initialArray) {
+    if (params.length === 0) return initialArray;
+
     let tagObj = {};
+    let newArray = initialArray;
     if (type === "ing") tagObj = this.dataLogic.getIngredientsObject();
     if (type === "app") tagObj = this.dataLogic.getAppliancesObject();
     if (type === "ust") tagObj = this.dataLogic.getUstensilsObject();
 
-    console.log(tagObj[params[0]]);
+    params.forEach((param) => {
+      if (newArray.length === 0) newArray = tagObj[param];
+      else {
+        newArray = newArray.filter((elt) => {
+          if (tagObj[param].includes(elt)) return true;
+          else return false;
+        });
+      }
+    });
+    return newArray;
+  }
+
+  getFullRecipesFromId() {
+    let fullRecipes = this.dataLogic.getInitialData();
+    fullRecipes = fullRecipes.filter((recipe) => {
+      if (this.recipesList.includes(recipe.id)) return true;
+      else return false;
+    });
+    return fullRecipes;
   }
 
   displayRecipesList() {
     this.cleanRecipesView();
-    this.recipesList.forEach((recipe) => {
+    this.setRecipesListFromUrlParams();
+    const recipesToDisplay = this.getFullRecipesFromId();
+    recipesToDisplay.forEach((recipe) => {
       const elt = new Recipe(recipe);
       this.recipesView.appendChild(elt.createRecipeElement());
     });
-    this.setRecipesListFromUrlParams();
   }
 }
