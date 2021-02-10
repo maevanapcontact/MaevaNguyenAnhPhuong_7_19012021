@@ -1,26 +1,25 @@
+import DomManager from "../utils/DomManager";
 import Filter from "./Filter";
 
-export default class Filters {
-  constructor(type, name, list) {
+export default class Filters extends DomManager {
+  constructor(type, name, filtersList) {
+    super();
     this.type = type;
     this.name = name;
-    this.tags = list;
+    this.filtersList = filtersList;
   }
 
   createFilterElement() {
-    const elt = document.createElement("div");
-    elt.className = "filters-elt";
-    const inputElt = document.createElement("input");
+    const elt = this.createGenericElt("div", "filters-elt");
+    const inputElt = this.createGenericElt("input");
     inputElt.setAttribute("type", "text");
     inputElt.setAttribute("value", this.name);
-    const iconElt = document.createElement("span");
-    iconElt.className = "fas fa-chevron-down";
+    const iconElt = this.createGenericElt("span", "fas fa-chevron-down");
     iconElt.setAttribute("id", `${this.type}-btn`);
-    const listElt = document.createElement("div");
-    listElt.className = "filters-all";
+    const listElt = this.createGenericElt("div", "filters-all");
     listElt.setAttribute("id", `${this.type}-filter`);
 
-    const ulElt = this.createTagsListElt(this.tags);
+    const ulElt = this.createFiltersListElt(this.filtersList);
     listElt.appendChild(ulElt);
 
     elt.appendChild(inputElt);
@@ -30,10 +29,10 @@ export default class Filters {
     return elt;
   }
 
-  createTagsListElt(list) {
-    const ulElt = document.createElement("ul");
-    list.forEach((tag) => {
-      const tagElt = new Filter(this.type, tag);
+  createFiltersListElt(list) {
+    const ulElt = this.createGenericElt("ul");
+    list.forEach((filter) => {
+      const tagElt = new Filter(this.type, filter);
       ulElt.appendChild(tagElt.createFilterElt());
     });
     return ulElt;

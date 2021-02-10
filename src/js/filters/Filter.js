@@ -1,10 +1,12 @@
+import DomManager from "../utils/DomManager";
 import FiltersView from "./FiltersView";
 import LabelsView from "../labels/LabelsView";
 import RecipesView from "../recipes/RecipesView";
 import Url from "../utils/Url";
 
-export default class Filter {
+export default class Filter extends DomManager {
   constructor(type, tag) {
+    super();
     this.name = tag.name;
     this.formattedName = tag.formattedName;
     this.type = type;
@@ -16,12 +18,8 @@ export default class Filter {
   }
 
   createFilterElt() {
-    const liElt = document.createElement("li");
-    const aElt = document.createElement("a");
-    aElt.setAttribute("href", "/");
-    aElt.setAttribute("title", this.name);
-    aElt.className = "filter-tag";
-    aElt.textContent = this.name;
+    const liElt = this.createGenericElt("li");
+    const aElt = this.createLinkElt("/", this.name, "filter-tag");
     liElt.appendChild(aElt);
     liElt.addEventListener("click", this.addClickedFilter);
 

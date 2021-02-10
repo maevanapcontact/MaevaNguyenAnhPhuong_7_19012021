@@ -10,11 +10,11 @@ export default class Url {
   }
 
   getAllParamsFromUrl() {
-    const ingParams = new URL(window.location.href).searchParams.getAll("ing");
-    const appParams = new URL(window.location.href).searchParams.getAll("app");
-    const ustParams = new URL(window.location.href).searchParams.getAll("ust");
+    this.ingParams = new URL(window.location.href).searchParams.getAll("ing");
+    this.appParams = new URL(window.location.href).searchParams.getAll("app");
+    this.ustParams = new URL(window.location.href).searchParams.getAll("ust");
 
-    return ingParams.concat(appParams).concat(ustParams);
+    return this.ingParams.concat(this.appParams).concat(this.ustParams);
   }
 
   setIngParams(ing) {

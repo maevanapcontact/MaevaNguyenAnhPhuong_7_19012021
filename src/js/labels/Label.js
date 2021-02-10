@@ -1,9 +1,11 @@
+import DomManager from "../utils/DomManager";
 import DataLogic from "../utils/DataLogic";
 import RecipesView from "../recipes/RecipesView";
 import Url from "../utils/Url";
 
-export default class Label {
+export default class Label extends DomManager {
   constructor(name, type) {
+    super();
     this.name = name;
     this.type = type;
     this.url = new Url();
@@ -13,11 +15,9 @@ export default class Label {
   }
 
   createLabel() {
-    const elt = document.createElement("button");
-    elt.className = `label ${this.type}`;
+    const elt = this.createGenericElt("button", `label ${this.type}`);
     elt.setAttribute("type", "button");
-    const iconElt = document.createElement("span");
-    iconElt.className = "far fa-times-circle";
+    const iconElt = this.createGenericElt("span", "far fa-times-circle");
     iconElt.addEventListener("click", this.removeFilter);
     const originalName = this.getOriginalName(this.name, this.type);
     elt.textContent =

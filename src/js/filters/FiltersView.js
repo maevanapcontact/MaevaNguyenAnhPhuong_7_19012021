@@ -81,7 +81,7 @@ export default class FiltersView {
   updateTagsListElt(id, filter, list) {
     const tagsElt = document.getElementById(id);
     tagsElt.innerHTML = "";
-    const listElt = filter.createTagsListElt(list);
+    const listElt = filter.createFiltersListElt(list);
     tagsElt.appendChild(listElt);
   }
 

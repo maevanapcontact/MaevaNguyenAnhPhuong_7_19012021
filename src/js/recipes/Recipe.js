@@ -1,7 +1,9 @@
+import DomManager from "../utils/DomManager";
 import Ingredient from "./Ingredient";
 
-export default class Recipe {
+export default class Recipe extends DomManager {
   constructor(data) {
+    super();
     this.id = data.id;
     this.name = data.name;
     this.ingredients = data.ingredients;
@@ -12,26 +14,18 @@ export default class Recipe {
   }
 
   createRecipeElement() {
-    const elt = document.createElement("article");
-    elt.className = "recipe";
-    const aElt = document.createElement("a");
-    aElt.setAttribute("href", "index.html");
-    aElt.setAttribute("title", this.name);
-    const imgElt = document.createElement("div");
-    imgElt.className = "recipe-img";
-    const dataElt = document.createElement("div");
-    dataElt.className = "recipe-data";
-    const headerElt = document.createElement("header");
-    const h2Elt = document.createElement("h2");
-    const timeElt = document.createElement("div");
-    timeElt.className = "recipe-time";
-    const categoryLeftElt = document.createElement("div");
-    categoryLeftElt.className = "recipe-category";
-    const categoryRightElt = document.createElement("div");
-    categoryRightElt.className = "recipe-category";
+    const elt = this.createGenericElt("article", "recipe");
+    const aElt = this.createLinkElt("index.html", this.name);
+    aElt.textContent = "";
+    const imgElt = this.createGenericElt("div", "recipe-img");
+    const dataElt = this.createGenericElt("div", "recipe-data");
+    const headerElt = this.createGenericElt("header");
+    const h2Elt = this.createGenericElt("h2");
+    const timeElt = this.createGenericElt("div", "recipe-time");
+    const categoryLeftElt = this.createGenericElt("div", "recipe-category");
+    const categoryRightElt = this.createGenericElt("div", "recipe-category");
 
-    const ulElt = document.createElement("ul");
-
+    const ulElt = this.createGenericElt("ul");
     this.ingredients.forEach((ingredient) => {
       const liElt = new Ingredient(ingredient).createIngredient();
       ulElt.appendChild(liElt);
