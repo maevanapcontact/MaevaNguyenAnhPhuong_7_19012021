@@ -1,6 +1,6 @@
-import Tag from "./Tag";
+import Filter from "./Filter";
 
-export default class Filter {
+export default class Filters {
   constructor(type, name, list) {
     this.type = type;
     this.name = name;
@@ -33,8 +33,8 @@ export default class Filter {
   createTagsListElt(list) {
     const ulElt = document.createElement("ul");
     list.forEach((tag) => {
-      const tagElt = new Tag(this.type, tag);
-      ulElt.appendChild(tagElt.createTagElt());
+      const tagElt = new Filter(this.type, tag);
+      ulElt.appendChild(tagElt.createFilterElt());
     });
     return ulElt;
   }

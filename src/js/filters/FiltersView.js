@@ -1,21 +1,21 @@
-import Filter from "./Filter";
-import DataLogic from "./DataLogic";
+import Filters from "./Filters";
+import DataLogic from "../utils/DataLogic";
 
 export default class FiltersView {
   constructor() {
     this.filtersView = document.getElementById("filters");
     this.data = new DataLogic();
-    this.ingredientsFilter = new Filter(
+    this.ingredientsFilter = new Filters(
       "ingredients",
       "Ingrédients",
       this.data.getFormattedIngredients()
     );
-    this.appliancesFilter = new Filter(
+    this.appliancesFilter = new Filters(
       "appliances",
       "Appareils",
       this.data.getFormattedAppliances()
     );
-    this.ustensilsFilter = new Filter(
+    this.ustensilsFilter = new Filters(
       "ustensils",
       "Ustensiles",
       this.data.getFormattedUstensils()

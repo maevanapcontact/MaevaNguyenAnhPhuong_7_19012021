@@ -1,5 +1,5 @@
 import Label from "./Label";
-import Url from "./Url";
+import Url from "../utils/Url";
 
 export default class LabelsView {
   constructor() {

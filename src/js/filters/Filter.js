@@ -1,9 +1,9 @@
 import FiltersView from "./FiltersView";
-import LabelsView from "./LabelsView";
-import RecipesView from "./RecipesView";
-import Url from "./Url";
+import LabelsView from "../labels/LabelsView";
+import RecipesView from "../recipes/RecipesView";
+import Url from "../utils/Url";
 
-export default class Tag {
+export default class Filter {
   constructor(type, tag) {
     this.name = tag.name;
     this.formattedName = tag.formattedName;
@@ -12,10 +12,10 @@ export default class Tag {
     this.recipesView = new RecipesView();
     this.url = new Url();
     this.filtersView = new FiltersView();
-    this.addClickedTag = this.addClickedTag.bind(this);
+    this.addClickedFilter = this.addClickedFilter.bind(this);
   }
 
-  createTagElt() {
+  createFilterElt() {
     const liElt = document.createElement("li");
     const aElt = document.createElement("a");
     aElt.setAttribute("href", "/");
@@ -23,12 +23,12 @@ export default class Tag {
     aElt.className = "filter-tag";
     aElt.textContent = this.name;
     liElt.appendChild(aElt);
-    liElt.addEventListener("click", this.addClickedTag);
+    liElt.addEventListener("click", this.addClickedFilter);
 
     return liElt;
   }
 
-  addClickedTag(evt) {
+  addClickedFilter(evt) {
     evt.preventDefault();
 
     let ingParams = this.url.getParamFromURL("ing");

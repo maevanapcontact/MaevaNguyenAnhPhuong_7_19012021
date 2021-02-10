@@ -1,6 +1,6 @@
-import RecipesView from "./RecipesView";
-import FiltersView from "./FiltersView";
-import LabelsView from "./LabelsView";
+import RecipesView from "./recipes/RecipesView";
+import FiltersView from "./filters/FiltersView";
+import LabelsView from "./labels/LabelsView";
 
 export default class Main {
   constructor() {

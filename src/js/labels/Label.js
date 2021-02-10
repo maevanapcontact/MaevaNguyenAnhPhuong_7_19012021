@@ -1,6 +1,6 @@
-import DataLogic from "./DataLogic";
-import RecipesView from "./RecipesView";
-import Url from "./Url";
+import DataLogic from "../utils/DataLogic";
+import RecipesView from "../recipes/RecipesView";
+import Url from "../utils/Url";
 
 export default class Label {
   constructor(name, type) {

@@ -1,7 +1,7 @@
-import DataLogic from "./DataLogic";
-import FiltersView from "./FiltersView";
+import DataLogic from "../utils/DataLogic";
+import FiltersView from "../filters/FiltersView";
 import Recipe from "./Recipe";
-import Url from "./Url";
+import Url from "../utils/Url";
 
 export default class RecipesView {
   constructor() {
