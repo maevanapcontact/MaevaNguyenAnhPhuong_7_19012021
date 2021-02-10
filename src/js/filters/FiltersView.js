@@ -21,6 +21,8 @@ export default class FiltersView {
       this.data.getFormattedUstensils()
     );
     this.toggleFilterList = this.toggleFilterList.bind(this);
+    this.openFilterList = this.openFilterList.bind(this);
+    this.scaleFilterUp = this.scaleFilterUp.bind(this);
   }
 
   displayAllFilters() {
@@ -35,6 +37,19 @@ export default class FiltersView {
     ingredientsElt.addEventListener("click", this.toggleFilterList);
     appliancesElt.addEventListener("click", this.toggleFilterList);
     ustensilsElt.addEventListener("click", this.toggleFilterList);
+
+    ingredientsElt.firstElementChild.addEventListener(
+      "focus",
+      this.scaleFilterUp
+    );
+    appliancesElt.firstElementChild.addEventListener(
+      "focus",
+      this.scaleFilterUp
+    );
+    ustensilsElt.firstElementChild.addEventListener(
+      "focus",
+      this.scaleFilterUp
+    );
   }
 
   toggleFilterList(evt) {
@@ -50,9 +65,13 @@ export default class FiltersView {
     if (targetId === "ustensils-btn")
       listElt = document.getElementById("ustensils-filter");
 
-    if (evt.target.className === "fas fa-chevron-down")
+    if (evt.target.className === "fas fa-chevron-down") {
+      this.scaleFilterUp(evt);
       this.openFilterList(listElt, targetId);
-    else this.closeAllFilterLists();
+    } else {
+      this.closeAllFilterLists();
+      this.scaleAllFiltersDown();
+    }
   }
 
   openFilterList(elt, buttonId) {
@@ -76,6 +95,19 @@ export default class FiltersView {
     ingredientsListBtn.className = "fas fa-chevron-down";
     appliancesListBtn.className = "fas fa-chevron-down";
     ustensilsListBtn.className = "fas fa-chevron-down";
+  }
+
+  scaleFilterUp(evt) {
+    evt.preventDefault();
+    this.scaleAllFiltersDown();
+    const parentElt = evt.target.parentNode;
+    parentElt.className += " scaled";
+    this.openFilterList(parentElt.childNodes[2], parentElt.childNodes[1].id);
+  }
+
+  scaleAllFiltersDown() {
+    const filtersElts = document.querySelectorAll(".filters-elt");
+    filtersElts.forEach((elt) => elt.classList.remove("scaled"));
   }
 
   updateTagsListElt(id, filter, list) {

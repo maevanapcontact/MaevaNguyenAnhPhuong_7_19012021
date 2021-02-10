@@ -45,5 +45,6 @@ export default class Filter extends DomManager {
     this.labelsView.displayAllLabels();
     this.recipesView.displayRecipesList();
     this.filtersView.closeAllFilterLists();
+    this.filtersView.scaleAllFiltersDown();
   }
 }
