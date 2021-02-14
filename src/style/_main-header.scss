@@ -119,6 +119,10 @@
       &:hover {
         cursor: pointer;
       }
+
+      &::placeholder {
+        color: #fff;
+      }
     }
 
     &:nth-child(1) {

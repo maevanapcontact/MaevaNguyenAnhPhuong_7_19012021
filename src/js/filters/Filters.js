@@ -13,7 +13,7 @@ export default class Filters extends DomManager {
     const elt = this.createGenericElt("div", "filters-elt");
     const inputElt = this.createGenericElt("input");
     inputElt.setAttribute("type", "text");
-    inputElt.setAttribute("value", this.name);
+    inputElt.setAttribute("placeholder", this.name);
     const iconElt = this.createGenericElt("span", "fas fa-chevron-down");
     iconElt.setAttribute("id", `${this.type}-btn`);
     const listElt = this.createGenericElt("div", "filters-all");
@@ -30,11 +30,24 @@ export default class Filters extends DomManager {
   }
 
   createFiltersListElt(list) {
+    this.setFiltersList(list);
     const ulElt = this.createGenericElt("ul");
-    list.forEach((filter) => {
+    this.filtersList.forEach((filter) => {
       const tagElt = new Filter(this.type, filter);
       ulElt.appendChild(tagElt.createFilterElt());
     });
     return ulElt;
+  }
+
+  getFiltersList() {
+    return this.filtersList;
+  }
+
+  setFiltersList(list) {
+    this.filtersList = list;
+  }
+
+  filterFiltersList(list) {
+    console.log(this.filtersList);
   }
 }

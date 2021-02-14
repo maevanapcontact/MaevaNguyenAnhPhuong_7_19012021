@@ -23,6 +23,7 @@ export default class FiltersView {
     this.toggleFilterList = this.toggleFilterList.bind(this);
     this.openFilterList = this.openFilterList.bind(this);
     this.scaleFilterUp = this.scaleFilterUp.bind(this);
+    this.manageInputChange = this.manageInputChange.bind(this);
   }
 
   displayAllFilters() {
@@ -49,6 +50,19 @@ export default class FiltersView {
     ustensilsElt.firstElementChild.addEventListener(
       "focus",
       this.scaleFilterUp
+    );
+
+    ingredientsElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
+    );
+    appliancesElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
+    );
+    ustensilsElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
     );
   }
 
@@ -110,20 +124,55 @@ export default class FiltersView {
     filtersElts.forEach((elt) => elt.classList.remove("scaled"));
   }
 
+  // manageIngInputChange(evt) {
+  //   const inputValue = evt.target.value;
+  //   const filtersList = document.querySelectorAll("#ingredients-filter a");
+  //   let filtersToShow = filtersList.map((elt) =>
+  //     elt.textContent.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  //   );
+  //   const filtersList = document.querySelectorAll("#ingredients-filter a");
+  //   console.log(filtersList);
+  // }
+
+  manageInputChange(evt) {
+    console.log(this);
+  }
+
   updateTagsListElt(id, filter, list) {
     const tagsElt = document.getElementById(id);
     tagsElt.innerHTML = "";
     const listElt = filter.createFiltersListElt(list);
     tagsElt.appendChild(listElt);
+
+    return filter;
   }
 
   updateAllTagsLists(ingList, appList, ustList) {
-    this.updateTagsListElt(
+    const newIngredientsFilter = this.updateTagsListElt(
       "ingredients-filter",
       this.ingredientsFilter,
       ingList
     );
-    this.updateTagsListElt("appliances-filter", this.appliancesFilter, appList);
-    this.updateTagsListElt("ustensils-filter", this.ustensilsFilter, ustList);
+    const newAppliancesFilter = this.updateTagsListElt(
+      "appliances-filter",
+      this.appliancesFilter,
+      appList
+    );
+    const newUstensilsFilter = this.updateTagsListElt(
+      "ustensils-filter",
+      this.ustensilsFilter,
+      ustList
+    );
+
+    console.log(this);
+    console.log(newIngredientsFilter);
+
+    this.ingredientsFilter = newIngredientsFilter;
+    this.appliancesFilter = newAppliancesFilter;
+    this.ustensilsFilter = newUstensilsFilter;
+  }
+
+  getIngredientsFilter() {
+    return this.ingredientsFilter;
   }
 }
