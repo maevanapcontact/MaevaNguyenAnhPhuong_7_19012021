@@ -1,16 +1,21 @@
 import DataLogic from "./data/DataLogic";
-import RecipesView from "./recipes/RecipesView";
 import state from "./data/globalState";
+import FiltersView from "./filters/FiltersView";
+import RecipesView from "./recipes/RecipesView";
+import Url from "./utils/Url";
 
 export default class Main {
   constructor() {
     this.dataLogic = new DataLogic();
     this.recipesView = new RecipesView();
+    this.filtersView = new FiltersView();
+    this.url = new Url();
   }
 
   initialize() {
     this.populateInitialGlobalState();
     this.recipesView.displayRecipes();
+    this.filtersView.displayAllFilters();
     console.log(state.globalState);
   }
 
@@ -24,5 +29,7 @@ export default class Main {
     this.dataLogic.setIngredientsObject();
     this.dataLogic.setAppliancesObject();
     this.dataLogic.setUstensilsObject();
+
+    this.url.setAllParams();
   }
 }
