@@ -1,5 +1,5 @@
+import state from "../data/globalState";
 import DomManager from "../utils/DomManager";
-import DataLogic from "../utils/DataLogic";
 import RecipesView from "../recipes/RecipesView";
 import Url from "../utils/Url";
 
@@ -9,7 +9,6 @@ export default class Label extends DomManager {
     this.name = name;
     this.type = type;
     this.url = new Url();
-    this.data = new DataLogic();
     this.recipesView = new RecipesView();
     this.removeFilter = this.removeFilter.bind(this);
   }
@@ -29,25 +28,25 @@ export default class Label extends DomManager {
 
   getOriginalName(param, type) {
     if (type === "ing")
-      return this.data
-        .getFormattedIngredients()
-        .find((elt) => elt.formattedName === param).name;
+      return state.globalState.allFormattedIngredients.find(
+        (elt) => elt.formattedName === param
+      ).name;
     if (type === "app")
-      return this.data
-        .getFormattedAppliances()
-        .find((elt) => elt.formattedName === param).name;
+      return state.globalState.allFormattedAppliances.find(
+        (elt) => elt.formattedName === param
+      ).name;
     if (type === "ust")
-      return this.data
-        .getFormattedUstensils()
-        .find((elt) => elt.formattedName === param).name;
+      return state.globalState.allFormattedUstensils.find(
+        (elt) => elt.formattedName === param
+      ).name;
   }
 
   removeFilter(evt) {
     evt.preventDefault();
 
-    let ingParams = this.url.getParamFromURL("ing");
-    let appParams = this.url.getParamFromURL("app");
-    let ustParams = this.url.getParamFromURL("ust");
+    let ingParams = state.globalState.ingParams;
+    let appParams = state.globalState.appParams;
+    let ustParams = state.globalState.ustParams;
 
     if (this.type === "ing")
       ingParams = ingParams.filter((elt) => elt !== this.name);
@@ -57,7 +56,7 @@ export default class Label extends DomManager {
       ustParams = ustParams.filter((elt) => elt !== this.name);
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
-    this.recipesView.displayRecipesList();
+    this.recipesView.displayRecipes();
     evt.target.parentNode.remove();
   }
 }

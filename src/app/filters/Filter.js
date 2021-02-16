@@ -1,4 +1,6 @@
 import state from "../data/globalState";
+import LabelsView from "../labels/LabelsView";
+import RecipesView from "../recipes/RecipesView";
 import DomManager from "../utils/DomManager";
 import Url from "../utils/Url";
 import FiltersView from "./FiltersView";
@@ -11,6 +13,8 @@ export default class Filter extends DomManager {
     this.type = type;
     this.url = new Url();
     this.filtersView = new FiltersView();
+    this.labelsView = new LabelsView();
+    this.recipesView = new RecipesView();
     this.addClickedFilter = this.addClickedFilter.bind(this);
   }
 
@@ -39,8 +43,8 @@ export default class Filter extends DomManager {
 
     this.url.addParamsToUrl(ingParams, appParams, ustParams);
 
-    // this.labelsView.displayAllLabels();
-    // this.recipesView.displayRecipesList();
+    this.labelsView.displayAllLabels();
+    this.recipesView.displayRecipes();
     this.filtersView.closeAllFilterLists();
     this.filtersView.scaleAllFiltersDown();
   }

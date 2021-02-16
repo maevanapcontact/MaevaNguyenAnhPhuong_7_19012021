@@ -15,25 +15,30 @@ export default class FiltersView {
     // this.manageInputChange = this.manageInputChange.bind(this);
   }
 
+  cleanFilters() {
+    this.filtersView.innerHTML = "";
+  }
+
   createAllFilters() {
     this.ingredientsFilter = new Filters(
       "ingredients",
       "Ingrédients",
-      state.globalState.allFormattedIngredients
+      state.globalState.ingFiltersToDisplay
     );
     this.appliancesFilter = new Filters(
       "appliances",
       "Appareils",
-      state.globalState.allFormattedAppliances
+      state.globalState.appFiltersToDisplay
     );
     this.ustensilsFilter = new Filters(
       "ustensils",
       "Ustensiles",
-      state.globalState.allFormattedUstensils
+      state.globalState.ustFiltersToDisplay
     );
   }
 
   displayAllFilters() {
+    this.cleanFilters();
     this.createAllFilters();
     const ingredientsElt = this.ingredientsFilter.createFilterElement();
     const appliancesElt = this.appliancesFilter.createFilterElement();
@@ -144,43 +149,5 @@ export default class FiltersView {
 
   //   manageInputChange(evt) {
   //     console.log(this);
-  //   }
-
-  //   updateTagsListElt(id, filter, list) {
-  //     const tagsElt = document.getElementById(id);
-  //     tagsElt.innerHTML = "";
-  //     const listElt = filter.createFiltersListElt(list);
-  //     tagsElt.appendChild(listElt);
-
-  //     return filter;
-  //   }
-
-  //   updateAllTagsLists(ingList, appList, ustList) {
-  //     const newIngredientsFilter = this.updateTagsListElt(
-  //       "ingredients-filter",
-  //       this.ingredientsFilter,
-  //       ingList
-  //     );
-  //     const newAppliancesFilter = this.updateTagsListElt(
-  //       "appliances-filter",
-  //       this.appliancesFilter,
-  //       appList
-  //     );
-  //     const newUstensilsFilter = this.updateTagsListElt(
-  //       "ustensils-filter",
-  //       this.ustensilsFilter,
-  //       ustList
-  //     );
-
-  //     console.log(this);
-  //     console.log(newIngredientsFilter);
-
-  //     this.ingredientsFilter = newIngredientsFilter;
-  //     this.appliancesFilter = newAppliancesFilter;
-  //     this.ustensilsFilter = newUstensilsFilter;
-  //   }
-
-  //   getIngredientsFilter() {
-  //     return this.ingredientsFilter;
   //   }
 }

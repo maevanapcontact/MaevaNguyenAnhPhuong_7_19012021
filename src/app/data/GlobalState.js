@@ -3,6 +3,7 @@ import data from "./data";
 export default {
   globalState: {
     initialData: data.recipes,
+    recipeIds: [],
     recipesToDisplay: data.recipes,
     ingParams: [],
     appParams: [],
@@ -17,5 +18,8 @@ export default {
     ingredientsObject: {},
     appliancesObject: {},
     ustensilsObject: {},
+    ingFiltersToDisplay: [],
+    appFiltersToDisplay: [],
+    ustFiltersToDisplay: [],
   },
 };

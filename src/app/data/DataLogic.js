@@ -7,6 +7,11 @@ export default class DataLogic {
     this.createTagObject = this.createTagObject.bind(this);
   }
 
+  setAllRecipeIds() {
+    const recipesIds = data.recipes.map((elt) => elt.id);
+    state.globalState.recipeIds = recipesIds;
+  }
+
   setAllIngredients() {
     let ingredients = [];
     this.initialData.forEach((recipe) => {

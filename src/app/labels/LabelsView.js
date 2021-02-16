@@ -1,3 +1,4 @@
+import state from "../data/globalState";
 import Label from "./Label";
 import Url from "../utils/Url";
 
@@ -9,9 +10,9 @@ export default class LabelsView {
 
   displayAllLabels() {
     this.labelsView.innerHTML = "";
-    const ingredientsParams = this.url.getParamFromURL("ing");
-    const appliancesParams = this.url.getParamFromURL("app");
-    const ustensilsParams = this.url.getParamFromURL("ust");
+    const ingredientsParams = state.globalState.ingParams;
+    const appliancesParams = state.globalState.appParams;
+    const ustensilsParams = state.globalState.ustParams;
 
     this.labelsView.appendChild(this.createLabels(ingredientsParams, "ing"));
     this.labelsView.appendChild(this.createLabels(appliancesParams, "app"));
