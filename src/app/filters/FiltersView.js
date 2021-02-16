@@ -1,12 +1,10 @@
 import state from "../data/globalState";
 import Filters from "./Filters";
-// import DataLogic from "../data/DataLogic";
 
 export default class FiltersView {
   constructor() {
     this.filtersView = document.getElementById("filters");
     this.overlay = document.getElementById("overlay");
-    // this.data = new DataLogic();
     this.ingredientsFilter;
     this.appliancesFilter;
     this.ustensilsFilter;
@@ -15,7 +13,7 @@ export default class FiltersView {
     this.scaleFilterUp = this.scaleFilterUp.bind(this);
     this.closeAllFilterLists = this.closeAllFilterLists.bind(this);
     this.putFiltersToInitialState = this.putFiltersToInitialState.bind(this);
-    // this.manageInputChange = this.manageInputChange.bind(this);
+    this.manageInputChange = this.manageInputChange.bind(this);
   }
 
   cleanFilters() {
@@ -70,18 +68,18 @@ export default class FiltersView {
 
     this.overlay.addEventListener("click", this.putFiltersToInitialState);
 
-    // ingredientsElt.firstElementChild.addEventListener(
-    //   "input",
-    //   this.manageInputChange
-    // );
-    // appliancesElt.firstElementChild.addEventListener(
-    //   "input",
-    //   this.manageInputChange
-    // );
-    // ustensilsElt.firstElementChild.addEventListener(
-    //   "input",
-    //   this.manageInputChange
-    // );
+    ingredientsElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
+    );
+    appliancesElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
+    );
+    ustensilsElt.firstElementChild.addEventListener(
+      "input",
+      this.manageInputChange
+    );
   }
 
   toggleFilterList(evt) {
@@ -149,17 +147,30 @@ export default class FiltersView {
     filtersElts.forEach((elt) => elt.classList.remove("scaled"));
   }
 
-  // manageIngInputChange(evt) {
-  //   const inputValue = evt.target.value;
-  //   const filtersList = document.querySelectorAll("#ingredients-filter a");
-  //   let filtersToShow = filtersList.map((elt) =>
-  //     elt.textContent.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-  //   );
-  //   const filtersList = document.querySelectorAll("#ingredients-filter a");
-  //   console.log(filtersList);
-  // }
+  manageInputChange(evt) {
+    const targetValue = evt.target.value;
+    const filtersList = this.getFiltersList(evt.target.placeholder);
+    if (targetValue.length > 0) {
+      filtersList.forEach((aElt) => {
+        if (this.normalizeText(aElt.textContent).includes(targetValue))
+          aElt.parentNode.style.display = "block";
+        else aElt.parentNode.style.display = "none";
+      });
+    } else {
+      filtersList.forEach((aElt) => (aElt.parentNode.style.display = "block"));
+    }
+  }
 
-  //   manageInputChange(evt) {
-  //     console.log(this);
-  //   }
+  normalizeText(text) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  getFiltersList(filterType) {
+    let listId = "";
+    if (filterType === "Ingrédients") listId = "ingredients-filter";
+    if (filterType === "Appareils") listId = "appliances-filter";
+    if (filterType === "Ustensiles") listId = "ustensils-filter";
+
+    return document.querySelectorAll(`#${listId} li a`);
+  }
 }
