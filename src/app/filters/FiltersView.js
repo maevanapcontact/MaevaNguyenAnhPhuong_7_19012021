@@ -5,6 +5,7 @@ import Filters from "./Filters";
 export default class FiltersView {
   constructor() {
     this.filtersView = document.getElementById("filters");
+    this.overlay = document.getElementById("overlay");
     // this.data = new DataLogic();
     this.ingredientsFilter;
     this.appliancesFilter;
@@ -12,6 +13,8 @@ export default class FiltersView {
     this.toggleFilterList = this.toggleFilterList.bind(this);
     this.openFilterList = this.openFilterList.bind(this);
     this.scaleFilterUp = this.scaleFilterUp.bind(this);
+    this.closeAllFilterLists = this.closeAllFilterLists.bind(this);
+    this.putFiltersToInitialState = this.putFiltersToInitialState.bind(this);
     // this.manageInputChange = this.manageInputChange.bind(this);
   }
 
@@ -65,6 +68,8 @@ export default class FiltersView {
       this.scaleFilterUp
     );
 
+    this.overlay.addEventListener("click", this.putFiltersToInitialState);
+
     // ingredientsElt.firstElementChild.addEventListener(
     //   "input",
     //   this.manageInputChange
@@ -106,9 +111,11 @@ export default class FiltersView {
     elt.className += " open";
     const buttonElt = document.getElementById(buttonId);
     buttonElt.className = "fas fa-chevron-up";
+    this.overlay.style.display = "block";
   }
 
   closeAllFilterLists() {
+    this.overlay.style.display = "none";
     const ingredientsListElt = document.getElementById("ingredients-filter");
     const appliancesListElt = document.getElementById("appliances-filter");
     const ustensilsListElt = document.getElementById("ustensils-filter");
@@ -122,6 +129,11 @@ export default class FiltersView {
     ingredientsListBtn.className = "fas fa-chevron-down";
     appliancesListBtn.className = "fas fa-chevron-down";
     ustensilsListBtn.className = "fas fa-chevron-down";
+  }
+
+  putFiltersToInitialState() {
+    this.closeAllFilterLists();
+    this.scaleAllFiltersDown();
   }
 
   scaleFilterUp(evt) {

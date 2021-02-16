@@ -90,6 +90,7 @@
     position: relative;
     margin: 0 0 10px 0;
     border-radius: 5px;
+    z-index: 20;
 
     &:nth-child(2) {
       @media (min-width: 600px) {
