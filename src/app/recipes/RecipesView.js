@@ -116,6 +116,9 @@ export default class RecipesView {
 
   displayRecipes() {
     this.cleanRecipesView();
+    if (state.globalState.recipesToDisplay.length === 0) {
+      this.recipesView.innerHTML = `<div class="no-recipes">Aucune recette ne correspond à votre critère…</div>`;
+    }
     this.setRecipesListFromUrlParams();
     const recipesToDisplay = this.getFullRecipesFromId();
     recipesToDisplay.forEach((recipe) => {
