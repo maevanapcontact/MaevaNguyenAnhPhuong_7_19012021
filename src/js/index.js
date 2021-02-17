@@ -48,10 +48,3 @@ ustInputElt.addEventListener("focus", scaleFilterUp);
 data.recipes.forEach((recipe) =>
   mainContentElt.appendChild(createRecipeElement(recipe))
 );
-
-/**
- * Checks
- */
-console.log(getAllIngredients());
-console.log(getAllAppliances());
-console.log(getAllUstensils());

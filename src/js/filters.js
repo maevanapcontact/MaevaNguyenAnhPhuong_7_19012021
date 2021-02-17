@@ -1,4 +1,9 @@
+import state from "./globalState";
 import { createGenericElt, createLinkElt } from "./utils";
+import { createAllLabels } from "./labels";
+import { normalizeText } from "./utils";
+
+const { globalState } = state;
 
 /**
  * DOM Variables
@@ -15,11 +20,35 @@ const fillFiltersList = (list) => {
   const ulElt = createGenericElt("ul");
   list.forEach((elt) => {
     const liElt = createGenericElt("li");
-    const aElt = createLinkElt("/", elt, "filter-tag");
+    const aElt = createLinkElt("/", elt.name, "filter-tag");
     liElt.appendChild(aElt);
+    liElt.addEventListener("click", addFilter(elt.type, elt.name));
     ulElt.appendChild(liElt);
   });
   return ulElt;
+};
+
+const addFilter = (type, name) => {
+  return function (evt) {
+    evt.preventDefault();
+    const formattedName = normalizeText(name);
+
+    if (type === "ing") {
+      if (!globalState.activeIngFilters.includes(formattedName))
+        globalState.activeIngFilters.push(formattedName);
+    }
+    if (type === "app") {
+      if (!globalState.activeAppFilters.includes(formattedName))
+        globalState.activeAppFilters.push(formattedName);
+    }
+    if (type === "ust") {
+      if (!globalState.activeUstFilters.includes(formattedName))
+        globalState.activeUstFilters.push(formattedName);
+    }
+    createAllLabels();
+    closeAllFilterLists();
+    scaleAllFiltersDown();
+  };
 };
 
 const toggleFilterList = (evt) => {

@@ -12,4 +12,11 @@ const createLinkElt = (eltHref, eltContent, eltClass = null) => {
   return elt;
 };
 
-export { createGenericElt, createLinkElt };
+const normalizeText = (text) => {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+};
+
+export { createGenericElt, createLinkElt, normalizeText };

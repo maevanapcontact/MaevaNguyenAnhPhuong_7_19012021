@@ -2,6 +2,7 @@ import { createGenericElt, createLinkElt } from "./utils";
 
 const createRecipeElement = (recipe) => {
   const elt = createGenericElt("article", "recipe");
+  elt.id = recipe.id;
   const aElt = createLinkElt("index.html", recipe.name);
   aElt.textContent = "";
   const imgElt = createGenericElt("div", "recipe-img");
@@ -37,8 +38,7 @@ const createRecipeElement = (recipe) => {
 
 const createIngredient = (ingredient) => {
   const liElt = document.createElement("li");
-
-  liElt.innerHTML = `<strong>${ingredient.name}`;
+  liElt.innerHTML = `<strong>${ingredient.ingredient}`;
   liElt.innerHTML += ingredient.quantity
     ? ` : </strong><span>${ingredient.quantity}`
     : `</strong>`;

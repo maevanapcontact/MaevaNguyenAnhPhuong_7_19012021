@@ -8,7 +8,10 @@ const getAllIngredients = () => {
         ingredients.push(ing.ingredient.toLowerCase());
     });
   });
-  return ingredients;
+  return ingredients.map((ing) => ({
+    type: "ing",
+    name: ing,
+  }));
 };
 
 const getAllAppliances = () => {
@@ -17,7 +20,10 @@ const getAllAppliances = () => {
     if (!appliances.includes(recipe.appliance.toLowerCase()))
       appliances.push(recipe.appliance.toLowerCase());
   });
-  return appliances;
+  return appliances.map((app) => ({
+    type: "app",
+    name: app,
+  }));
 };
 
 const getAllUstensils = () => {
@@ -28,7 +34,10 @@ const getAllUstensils = () => {
         ustensils.push(ustensil.toLowerCase());
     });
   });
-  return ustensils;
+  return ustensils.map((ust) => ({
+    type: "ust",
+    name: ust,
+  }));
 };
 
 export { getAllIngredients, getAllAppliances, getAllUstensils };
