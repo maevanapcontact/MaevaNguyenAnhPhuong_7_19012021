@@ -41,12 +41,25 @@
 
       <div class="labels" id="labels"></div>
 
-      <form
-        action="index.html"
-        method="POST"
-        class="filters"
-        id="filters"
-      ></form>
+      <form action="index.html" method="POST" class="filters" id="filters">
+        <div class="filters-elt" id="filters-elt-ing">
+          <input type="text" placeholder="Ingrédients" id="ing-input" />
+          <span class="fas fa-chevron-down" id="ing-btn"></span>
+          <div class="filters-all" id="ing-filter-list"></div>
+        </div>
+
+        <div class="filters-elt" id="filters-elt-app">
+          <input type="text" placeholder="Appareils" id="app-input" />
+          <span class="fas fa-chevron-down" id="app-btn"></span>
+          <div class="filters-all" id="app-filter-list"></div>
+        </div>
+
+        <div class="filters-elt" id="filters-elt-ust">
+          <input type="text" placeholder="Ustensiles" id="ust-input" />
+          <span class="fas fa-chevron-down" id="ust-btn"></span>
+          <div class="filters-all" id="ust-filter-list"></div>
+        </div>
+      </form>
     </header>
 
     <!-- MAIN CONTENT -->
