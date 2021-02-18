@@ -4,6 +4,10 @@ import { normalizeText } from "./utils";
 
 const { globalState } = state;
 
+/**
+ * Get a list of all ingredients from all recipes
+ * @return  {array}    the list of ingredients
+ */
 const getAllIngredients = () => {
   let ingredients = [];
   data.recipes.forEach((recipe) => {
@@ -18,6 +22,10 @@ const getAllIngredients = () => {
   }));
 };
 
+/**
+ * Get a list of all appliances from all recipes
+ * @return  {array}    the list of appliances
+ */
 const getAllAppliances = () => {
   let appliances = [];
   data.recipes.forEach((recipe) => {
@@ -30,6 +38,10 @@ const getAllAppliances = () => {
   }));
 };
 
+/**
+ * Get a list of all ustensils from all recipes
+ * @return  {array}    the list of ustensils
+ */
 const getAllUstensils = () => {
   let ustensils = [];
   data.recipes.forEach((recipe) => {
@@ -44,6 +56,11 @@ const getAllUstensils = () => {
   }));
 };
 
+/**
+ * Get a list of all ingredients from all recipes
+ * @param   {array}  tagList  the array of filters
+ * @return  {object}
+ */
 const createTagObject = (tagList) => {
   let tagObj = {};
   tagList.forEach((tag) => (tagObj[normalizeText(tag.name)] = []));
@@ -51,6 +68,10 @@ const createTagObject = (tagList) => {
   return tagObj;
 };
 
+/**
+ * Get an object with all ingredient names
+ * @return  {object}
+ */
 const getIngredientsObject = () => {
   let ingredientsObject = createTagObject(getAllIngredients());
   data.recipes.forEach((recipe) => {
@@ -62,6 +83,10 @@ const getIngredientsObject = () => {
   return ingredientsObject;
 };
 
+/**
+ * Get an object with all appliance names
+ * @return  {object}
+ */
 const getAppliancesObject = () => {
   let appliancesObject = createTagObject(getAllAppliances());
 
@@ -73,6 +98,10 @@ const getAppliancesObject = () => {
   return appliancesObject;
 };
 
+/**
+ * Get an object with all ustensil names
+ * @return  {object}
+ */
 const getUstensilsObject = () => {
   let ustensilsObject = createTagObject(getAllUstensils());
 
@@ -86,6 +115,10 @@ const getUstensilsObject = () => {
   return ustensilsObject;
 };
 
+/**
+ * fills the recipesFromFilters of the globalState with filtered recipe IDs
+ * @return  {void}
+ */
 const fillRecipesFromFilters = () => {
   globalState.recipesFromFilters = [];
 
@@ -94,6 +127,10 @@ const fillRecipesFromFilters = () => {
   fillRecipeSingleFilter("ust");
 };
 
+/**
+ * fill the recipesFromFilters with a single filter type (ing, app or ust)
+ * @return  {void}
+ */
 const fillRecipeSingleFilter = (type) => {
   let filterObj = {};
   let filterArray = [];

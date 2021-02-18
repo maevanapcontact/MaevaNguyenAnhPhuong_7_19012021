@@ -1,5 +1,10 @@
 import { createGenericElt, createLinkElt } from "./utils";
 
+/**
+ * Create single recipe
+ * @param   {object}  recipe
+ * @return  {node}    the created element
+ */
 const createRecipeElement = (recipe) => {
   const elt = createGenericElt("article", "recipe");
   elt.id = recipe.id;
@@ -36,6 +41,11 @@ const createRecipeElement = (recipe) => {
   return elt;
 };
 
+/**
+ * Create single ingredient
+ * @param   {object}  ingredient
+ * @return  {node}    the created element
+ */
 const createIngredient = (ingredient) => {
   const liElt = document.createElement("li");
   liElt.innerHTML = `<strong>${ingredient.ingredient}`;
