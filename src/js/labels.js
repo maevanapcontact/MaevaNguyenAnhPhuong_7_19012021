@@ -1,4 +1,5 @@
 import state from "./globalState";
+import { fillRecipesFromFilters } from "./datalogic";
 import { createGenericElt, normalizeText } from "./utils";
 
 const labelsElt = document.getElementById("labels");
@@ -49,6 +50,7 @@ const removeFilter = (type, name) => {
         (elt) => formattedName !== elt
       );
     createAllLabels();
+    fillRecipesFromFilters();
   };
 };
 

@@ -1,4 +1,5 @@
 import state from "./globalState";
+import { fillRecipesFromFilters } from "./datalogic";
 import { createGenericElt, createLinkElt } from "./utils";
 import { createAllLabels } from "./labels";
 import { normalizeText } from "./utils";
@@ -48,6 +49,7 @@ const addFilter = (type, name) => {
     createAllLabels();
     closeAllFilterLists();
     scaleAllFiltersDown();
+    fillRecipesFromFilters();
   };
 };
 

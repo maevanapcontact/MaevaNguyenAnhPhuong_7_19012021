@@ -3,5 +3,6 @@ export default {
     activeIngFilters: [],
     activeAppFilters: [],
     activeUstFilters: [],
+    recipesFromFilters: [],
   },
 };

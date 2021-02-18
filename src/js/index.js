@@ -3,6 +3,9 @@ import {
   getAllIngredients,
   getAllAppliances,
   getAllUstensils,
+  getIngredientsObject,
+  getAppliancesObject,
+  getUstensilsObject,
 } from "./datalogic";
 import { createRecipeElement } from "./recipes";
 import {
@@ -48,3 +51,7 @@ ustInputElt.addEventListener("focus", scaleFilterUp);
 data.recipes.forEach((recipe) =>
   mainContentElt.appendChild(createRecipeElement(recipe))
 );
+
+console.log(getIngredientsObject());
+console.log(getAppliancesObject());
+console.log(getUstensilsObject());
