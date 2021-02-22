@@ -1,7 +1,12 @@
 import data from "./data";
 import { getIngredientsStringFromRecipe } from "./datalogic";
 import { normalizeText } from "./utils";
-import { cleanFiltersList } from "./filters";
+import {
+  cleanFiltersList,
+  getVisibleFilters,
+  createFilterElt,
+  fillFiltersWithInitialData,
+} from "./filters";
 
 const { recipes } = data;
 
@@ -15,7 +20,10 @@ const manageSearchInput = (evt) => {
   const value = evt.target.value;
 
   if (value.length > 2) searchRecipes(value);
-  else hideAllRecipes();
+  else {
+    hideAllRecipes();
+    fillFiltersWithInitialData();
+  }
 };
 
 /**
@@ -35,6 +43,7 @@ const searchRecipes = (val) => {
       getIngredientsStringFromRecipe(recipe).includes(value)
     ) {
       recipeToDisplay.style.display = "block";
+      displayFiltersFromRecipes(recipe);
     } else {
       recipeToDisplay.style.display = "none";
     }
@@ -48,6 +57,64 @@ const searchRecipes = (val) => {
 const hideAllRecipes = () => {
   const recipeElts = document.querySelectorAll("#main-content article");
   recipeElts.forEach((elt) => (elt.style.display = "none"));
+};
+
+/**
+ * Display all filters included in the displayed recipes
+ * @param   {object} recipe the added recipe
+ * @returns {void}
+ */
+const displayFiltersFromRecipes = (recipe) => {
+  displayIngredientsFromRecipe(recipe);
+  displayAppliancesFromRecipe(recipe);
+  displayUstensilsFromRecipe(recipe);
+};
+
+/**
+ * Display the ingredient filters included in the displayed recipes
+ * @param   {object} recipe the added recipe
+ * @returns {void}
+ */
+const displayIngredientsFromRecipe = (recipe) => {
+  const ingListElt = document.getElementById("ing-filter-list").firstChild;
+  const visibleIngFilters = getVisibleFilters("ing");
+
+  recipe.ingredients.forEach((ing) => {
+    if (!visibleIngFilters.includes(ing.ingredient.toLowerCase()))
+      ingListElt.appendChild(
+        createFilterElt("ing", ing.ingredient.toLowerCase())
+      );
+  });
+};
+
+/**
+ * Display the appliance filters included in the displayed recipes
+ * @param   {object} recipe the added recipe
+ * @returns {void}
+ */
+const displayAppliancesFromRecipe = (recipe) => {
+  const appListElt = document.getElementById("app-filter-list").firstChild;
+  const visibleAppFilters = getVisibleFilters("app");
+
+  if (!visibleAppFilters.includes(recipe.appliance.toLowerCase()))
+    appListElt.appendChild(
+      createFilterElt("app", recipe.appliance.toLowerCase())
+    );
+};
+
+/**
+ * Display the ustensil filters included in the displayed recipes
+ * @param   {object} recipe the added recipe
+ * @returns {void}
+ */
+const displayUstensilsFromRecipe = (recipe) => {
+  const ustListElt = document.getElementById("ust-filter-list").firstChild;
+  const visibleUstFilters = getVisibleFilters("ust");
+
+  recipe.ustensils.forEach((ust) => {
+    if (!visibleUstFilters.includes(ust.toLowerCase()))
+      ustListElt.appendChild(createFilterElt("ust", ust.toLowerCase()));
+  });
 };
 
 export { manageSearchInput };

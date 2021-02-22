@@ -1,5 +1,10 @@
 import state from "./globalState";
-import { fillRecipesFromFilters } from "./datalogic";
+import {
+  fillRecipesFromFilters,
+  getAllIngredients,
+  getAllAppliances,
+  getAllUstensils,
+} from "./datalogic";
 import { createGenericElt, createLinkElt } from "./utils";
 import { createAllLabels } from "./labels";
 import { normalizeText } from "./utils";
@@ -16,6 +21,31 @@ const ustFiltersListElt = document.getElementById("ust-filter-list");
 const ingBtnElt = document.getElementById("ing-btn");
 const appBtnElt = document.getElementById("app-btn");
 const ustBtnElt = document.getElementById("ust-btn");
+
+/**
+ * Display the initial filters
+ * @returns {void}
+ */
+const initializeFilters = () => {
+  fillFiltersWithInitialData();
+  ingBtnElt.addEventListener("click", toggleFilterList);
+  appBtnElt.addEventListener("click", toggleFilterList);
+  ustBtnElt.addEventListener("click", toggleFilterList);
+  overlayElt.addEventListener("click", putFiltersToInitialState);
+};
+
+/**
+ * Fills the filters with initial data
+ * @returns {void}
+ */
+const fillFiltersWithInitialData = () => {
+  ingFiltersListElt.innerHTML = "";
+  appFiltersListElt.innerHTML = "";
+  ustFiltersListElt.innerHTML = "";
+  ingFiltersListElt.appendChild(fillFiltersList(getAllIngredients()));
+  appFiltersListElt.appendChild(fillFiltersList(getAllAppliances()));
+  ustFiltersListElt.appendChild(fillFiltersList(getAllUstensils()));
+};
 
 /**
  * creates a list element with all filters of a type
@@ -174,26 +204,43 @@ const cleanFiltersList = () => {
  * @param {string} filterListElt  ing, app or ust
  * @param {string} filter         the filter's content
  */
-// const addFilterFromRecipe = (filterListElt, filter) => {
-//   if (filterListElt === "ing") {
-//     const newFilter = createFilterElt("ing", filter);
-//     ingFiltersListElt.firstChild.appendChild(newFilter);
-//   }
-//   if (filterListElt === "app") {
-//     const newFilter = createFilterElt("app", filter);
-//     appFiltersListElt.firstChild.appendChild(newFilter);
-//   }
-//   if (filterListElt === "ust") {
-//     const newFilter = createFilterElt("ust", filter);
-//     ustFiltersListElt.firstChild.appendChild(newFilter);
-//   }
-// };
+const addFilterFromRecipe = (filterListElt, filter) => {
+  if (filterListElt === "ing") {
+    const newFilter = createFilterElt("ing", filter);
+    ingFiltersListElt.firstChild.appendChild(newFilter);
+  }
+  if (filterListElt === "app") {
+    const newFilter = createFilterElt("app", filter);
+    appFiltersListElt.firstChild.appendChild(newFilter);
+  }
+  if (filterListElt === "ust") {
+    const newFilter = createFilterElt("ust", filter);
+    ustFiltersListElt.firstChild.appendChild(newFilter);
+  }
+};
+
+/**
+ * Get the list of currently displayed filters
+ * @param   {string} type ing, app or ust
+ * @returns {array}
+ */
+const getVisibleFilters = (type) => {
+  const listNodes = document.querySelectorAll(`#${type}-filter-list li a`);
+  const listContentArray = Array.from(listNodes).map((elt) =>
+    elt.textContent.toLowerCase()
+  );
+  return listContentArray;
+};
 
 export {
+  initializeFilters,
   fillFiltersList,
   toggleFilterList,
   putFiltersToInitialState,
   scaleFilterUp,
-  // addFilterFromRecipe,
+  addFilterFromRecipe,
   cleanFiltersList,
+  getVisibleFilters,
+  createFilterElt,
+  fillFiltersWithInitialData,
 };
