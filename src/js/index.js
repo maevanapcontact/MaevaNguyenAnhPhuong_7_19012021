@@ -1,4 +1,3 @@
-import data from "./data";
 import {
   getAllIngredients,
   getAllAppliances,
@@ -7,13 +6,14 @@ import {
   getAppliancesObject,
   getUstensilsObject,
 } from "./datalogic";
-import { createRecipeElement } from "./recipes";
+import { initializeRecipes } from "./recipes";
 import {
   fillFiltersList,
   toggleFilterList,
   putFiltersToInitialState,
   scaleFilterUp,
 } from "./filters";
+import { manageSearchInput } from "./search";
 import "../style/main.scss";
 
 /**
@@ -30,6 +30,7 @@ const ingInputElt = document.getElementById("ing-input");
 const appInputElt = document.getElementById("app-input");
 const ustInputElt = document.getElementById("ust-input");
 const overlayElt = document.getElementById("overlay");
+const searchBarElt = document.getElementById("search-bar");
 
 /**
  * Display initial filters
@@ -48,9 +49,12 @@ ustInputElt.addEventListener("focus", scaleFilterUp);
 /**
  * Display initial recipes
  */
-data.recipes.forEach((recipe) =>
-  mainContentElt.appendChild(createRecipeElement(recipe))
-);
+initializeRecipes(mainContentElt);
+
+/**
+ * Runs the search function
+ */
+searchBarElt.addEventListener("input", manageSearchInput);
 
 console.log(getIngredientsObject());
 console.log(getAppliancesObject());

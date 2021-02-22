@@ -162,6 +162,19 @@ const fillRecipeSingleFilter = (type) => {
   });
 };
 
+/**
+ * Get a unique string with all ingredients from one recipe
+ * @param   {object} recipe
+ * @returns {string}
+ */
+const getIngredientsStringFromRecipe = (recipe) => {
+  let ingredientsString = "";
+  recipe.ingredients.forEach((ing) => {
+    ingredientsString += ` ${normalizeText(ing.ingredient)}`;
+  });
+  return ingredientsString;
+};
+
 export {
   getAllIngredients,
   getAllAppliances,
@@ -170,4 +183,5 @@ export {
   getAppliancesObject,
   getUstensilsObject,
   fillRecipesFromFilters,
+  getIngredientsStringFromRecipe,
 };

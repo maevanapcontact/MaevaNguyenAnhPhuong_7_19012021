@@ -1,3 +1,4 @@
+import data from "./data";
 import { createGenericElt, createLinkElt } from "./utils";
 
 /**
@@ -57,4 +58,17 @@ const createIngredient = (ingredient) => {
   return liElt;
 };
 
-export { createRecipeElement };
+/**
+ * Build all recipes and hide them
+ * @param   {node} containerElt The main content
+ * @returns {void}
+ */
+const initializeRecipes = (containerElt) => {
+  data.recipes.forEach((recipe) => {
+    const recipeElt = createRecipeElement(recipe);
+    recipeElt.style.display = "none";
+    containerElt.appendChild(recipeElt);
+  });
+};
+
+export { initializeRecipes };

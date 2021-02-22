@@ -25,13 +25,25 @@ const ustBtnElt = document.getElementById("ust-btn");
 const fillFiltersList = (list) => {
   const ulElt = createGenericElt("ul");
   list.forEach((elt) => {
-    const liElt = createGenericElt("li");
-    const aElt = createLinkElt("/", elt.name, "filter-tag");
-    liElt.appendChild(aElt);
-    liElt.addEventListener("click", addFilter(elt.type, elt.name));
+    const liElt = createFilterElt(elt.type, elt.name);
     ulElt.appendChild(liElt);
   });
   return ulElt;
+};
+
+/**
+ * Creates a single filter element
+ * @param   {string} type ing, app or ust
+ * @param   {string} name the filter's content
+ * @returns {node}
+ */
+const createFilterElt = (type, name) => {
+  const liElt = createGenericElt("li");
+  const aElt = createLinkElt("/", name, "filter-tag");
+  liElt.appendChild(aElt);
+  liElt.addEventListener("click", addFilter(type, name));
+
+  return liElt;
 };
 
 /**
@@ -147,9 +159,41 @@ const putFiltersToInitialState = () => {
   scaleAllFiltersDown();
 };
 
+/**
+ * Remove the HTML content of all filter's ul
+ * @returns {void}
+ */
+const cleanFiltersList = () => {
+  ingFiltersListElt.firstChild.innerHTML = "";
+  appFiltersListElt.firstChild.innerHTML = "";
+  ustFiltersListElt.firstChild.innerHTML = "";
+};
+
+/**
+ * Add a given filter to the filter's list
+ * @param {string} filterListElt  ing, app or ust
+ * @param {string} filter         the filter's content
+ */
+// const addFilterFromRecipe = (filterListElt, filter) => {
+//   if (filterListElt === "ing") {
+//     const newFilter = createFilterElt("ing", filter);
+//     ingFiltersListElt.firstChild.appendChild(newFilter);
+//   }
+//   if (filterListElt === "app") {
+//     const newFilter = createFilterElt("app", filter);
+//     appFiltersListElt.firstChild.appendChild(newFilter);
+//   }
+//   if (filterListElt === "ust") {
+//     const newFilter = createFilterElt("ust", filter);
+//     ustFiltersListElt.firstChild.appendChild(newFilter);
+//   }
+// };
+
 export {
   fillFiltersList,
   toggleFilterList,
   putFiltersToInitialState,
   scaleFilterUp,
+  // addFilterFromRecipe,
+  cleanFiltersList,
 };
