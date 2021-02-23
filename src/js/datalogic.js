@@ -116,49 +116,47 @@ const getUstensilsObject = () => {
 };
 
 /**
- * fills the recipesFromFilters of the globalState with filtered recipe IDs
- * @return  {void}
+ * Add all recipes ids in the global state
+ * @returns {void}
  */
 const fillRecipesFromFilters = () => {
-  globalState.recipesFromFilters = [];
-
-  fillRecipeSingleFilter("ing");
-  fillRecipeSingleFilter("app");
-  fillRecipeSingleFilter("ust");
+  globalState.recipesFromFilters = data.recipes.map((elt) => elt.id);
 };
 
 /**
- * fill the recipesFromFilters with a single filter type (ing, app or ust)
- * @return  {void}
+ * Populate the global state with Ids from filters
+ * @returns {void}
  */
-const fillRecipeSingleFilter = (type) => {
-  let filterObj = {};
-  let filterArray = [];
+const manageFilters = () => {
+  fillRecipesFromFilters();
 
-  if (type === "ing") {
-    filterObj = getIngredientsObject();
-    filterArray = globalState.activeIngFilters;
-  }
-  if (type === "app") {
-    filterObj = getAppliancesObject();
-    filterArray = globalState.activeAppFilters;
-  }
-  if (type === "ust") {
-    filterObj = getUstensilsObject();
-    filterArray = globalState.activeUstFilters;
-  }
+  const ingArray = globalState.activeIngFilters;
+  const appArray = globalState.activeAppFilters;
+  const ustArray = globalState.activeUstFilters;
 
-  filterArray.forEach((elt) => {
-    if (globalState.recipesFromFilters.length === 0) {
-      globalState.recipesFromFilters = filterObj[elt];
-    } else {
-      globalState.recipesFromFilters = globalState.recipesFromFilters.filter(
-        (id) => {
-          if (filterObj[elt].includes(id)) return true;
-          else return false;
-        }
-      );
-    }
+  const ingObj = getIngredientsObject();
+  const appObj = getAppliancesObject();
+  const ustObj = getUstensilsObject();
+
+  manageSingleFilter(ingArray, ingObj);
+  manageSingleFilter(appArray, appObj);
+  manageSingleFilter(ustArray, ustObj);
+};
+
+/**
+ * Manage a single filter array of Ids
+ * @param   {array}   filterArray   Array of filters
+ * @param   {object}  filterObject  Object of filters with Ids
+ * @returns {void}
+ */
+const manageSingleFilter = (filterArray, filterObject) => {
+  filterArray.forEach((filter) => {
+    globalState.recipesFromFilters = globalState.recipesFromFilters.filter(
+      (id) => {
+        if (filterObject[filter].includes(id)) return true;
+        else return false;
+      }
+    );
   });
 };
 
@@ -182,6 +180,7 @@ export {
   getIngredientsObject,
   getAppliancesObject,
   getUstensilsObject,
-  fillRecipesFromFilters,
+  manageFilters,
   getIngredientsStringFromRecipe,
+  fillRecipesFromFilters,
 };

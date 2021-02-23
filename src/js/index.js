@@ -1,8 +1,5 @@
-import {
-  getIngredientsObject,
-  getAppliancesObject,
-  getUstensilsObject,
-} from "./datalogic";
+// import state from "./globalState";
+import { fillRecipesFromFilters } from "./datalogic";
 import { initializeRecipes } from "./recipes";
 import { scaleFilterUp, initializeFilters } from "./filters";
 import { manageSearchInput } from "./search";
@@ -35,6 +32,7 @@ initializeRecipes(mainContentElt);
  */
 searchBarElt.addEventListener("input", manageSearchInput);
 
-console.log(getIngredientsObject());
-console.log(getAppliancesObject());
-console.log(getUstensilsObject());
+/**
+ * Populate the recipesFromFilter global state
+ */
+fillRecipesFromFilters();

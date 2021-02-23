@@ -1,6 +1,6 @@
 import state from "./globalState";
 import {
-  fillRecipesFromFilters,
+  manageFilters,
   getAllIngredients,
   getAllAppliances,
   getAllUstensils,
@@ -102,7 +102,8 @@ const addFilter = (type, name) => {
     createAllLabels();
     closeAllFilterLists();
     scaleAllFiltersDown();
-    fillRecipesFromFilters();
+    manageFilters();
+    addTagsFilter();
   };
 };
 
@@ -232,6 +233,10 @@ const getVisibleFilters = (type) => {
   return listContentArray;
 };
 
+const addTagsFilter = () => {
+  // console.log(globalState.recipesFromFilters);
+};
+
 export {
   initializeFilters,
   fillFiltersList,
@@ -243,4 +248,5 @@ export {
   getVisibleFilters,
   createFilterElt,
   fillFiltersWithInitialData,
+  addTagsFilter,
 };

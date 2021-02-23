@@ -6,6 +6,7 @@ import {
   getVisibleFilters,
   createFilterElt,
   fillFiltersWithInitialData,
+  addTagsFilter,
 } from "./filters";
 
 const { recipes } = data;
@@ -48,6 +49,7 @@ const searchRecipes = (val) => {
       recipeToDisplay.style.display = "none";
     }
   });
+  addTagsFilter();
 };
 
 /**
