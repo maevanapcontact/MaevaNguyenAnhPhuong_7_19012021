@@ -1,5 +1,11 @@
 import data from "./data";
+import state from "./state";
 import { createGenericElt, createLinkElt } from "./utils";
+
+/**
+ * DOM Variables
+ */
+const mainContentElt = document.getElementById("main-content");
 
 /**
  * Create single recipe
@@ -60,14 +66,14 @@ const createIngredient = (ingredient) => {
 
 /**
  * Build all recipes and hide them
- * @param   {node} containerElt The main content
  * @returns {void}
  */
-const initializeRecipes = (containerElt) => {
+const initializeRecipes = () => {
+  mainContentElt.innerHTML = "";
   data.recipes.forEach((recipe) => {
     const recipeElt = createRecipeElement(recipe);
     recipeElt.style.display = "none";
-    containerElt.appendChild(recipeElt);
+    mainContentElt.appendChild(recipeElt);
   });
 };
 

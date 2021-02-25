@@ -1,15 +1,5 @@
-import state from "./globalState";
-import {
-  manageFilters,
-  getAllIngredients,
-  getAllAppliances,
-  getAllUstensils,
-} from "./datalogic";
-import { createGenericElt, createLinkElt, normalizeText } from "./utils";
-import { createAllLabels } from "./labels";
-import { searchRecipes } from "./search";
-
-const { globalState } = state;
+import state from "./state";
+import { createGenericElt, createLinkElt } from "./utils";
 
 /**
  * DOM Variables
@@ -21,45 +11,6 @@ const ustFiltersListElt = document.getElementById("ust-filter-list");
 const ingBtnElt = document.getElementById("ing-btn");
 const appBtnElt = document.getElementById("app-btn");
 const ustBtnElt = document.getElementById("ust-btn");
-
-/**
- * Display the initial filters
- * @returns {void}
- */
-const initializeFilters = () => {
-  fillFiltersWithInitialData();
-  ingBtnElt.addEventListener("click", toggleFilterList);
-  appBtnElt.addEventListener("click", toggleFilterList);
-  ustBtnElt.addEventListener("click", toggleFilterList);
-  overlayElt.addEventListener("click", putFiltersToInitialState);
-};
-
-/**
- * Fills the filters with initial data
- * @returns {void}
- */
-const fillFiltersWithInitialData = () => {
-  ingFiltersListElt.innerHTML = "";
-  appFiltersListElt.innerHTML = "";
-  ustFiltersListElt.innerHTML = "";
-  ingFiltersListElt.appendChild(fillFiltersList(getAllIngredients()));
-  appFiltersListElt.appendChild(fillFiltersList(getAllAppliances()));
-  ustFiltersListElt.appendChild(fillFiltersList(getAllUstensils()));
-};
-
-/**
- * creates a list element with all filters of a type
- * @param   {array} list  list of filters to display
- * @return  {node}
- */
-const fillFiltersList = (list) => {
-  const ulElt = createGenericElt("ul");
-  list.forEach((elt) => {
-    const liElt = createFilterElt(elt.type, elt.name);
-    ulElt.appendChild(liElt);
-  });
-  return ulElt;
-};
 
 /**
  * Creates a single filter element
@@ -78,36 +29,51 @@ const createFilterElt = (type, name) => {
 
 /**
  * add a filter onClick
- * @param   {string}   type  ing, app or ust
- * @param   {string}  name  the filter's name
+ * @param   {string}    type  ing, app or ust
+ * @param   {string}    name  the filter's name
  * @return  {void}
  */
 const addFilter = (type, name) => {
   return function (evt) {
     evt.preventDefault();
-    const formattedName = normalizeText(name);
-
-    if (type === "ing") {
-      if (!globalState.activeIngFilters.includes(formattedName))
-        globalState.activeIngFilters.push(formattedName);
-    }
-    if (type === "app") {
-      if (!globalState.activeAppFilters.includes(formattedName))
-        globalState.activeAppFilters.push(formattedName);
-    }
-    if (type === "ust") {
-      if (!globalState.activeUstFilters.includes(formattedName))
-        globalState.activeUstFilters.push(formattedName);
-    }
-    createAllLabels();
-    closeAllFilterLists();
-    scaleAllFiltersDown();
-    manageFilters();
-    addTagsFilter();
-
-    const searchBarElt = document.getElementById("search-bar");
-    if (searchBarElt.value.length > 2) searchRecipes();
+    console.log(`${type}: ${name}`);
+    putFiltersToInitialState();
   };
+};
+
+/**
+ * creates a list element with all filters of a type
+ * @param   {array} list  list of filters to display
+ * @return  {node}
+ */
+const createFiltersList = (listElt, list) => {
+  listElt.innerHTML = "";
+  list.forEach((elt) => {
+    const liElt = createFilterElt(elt.type, elt.name);
+    listElt.appendChild(liElt);
+  });
+};
+
+/**
+ * Fills the filters list with data from state
+ * @returns {void}
+ */
+const fillAllFilterLists = () => {
+  createFiltersList(ingFiltersListElt, state.displayedIng);
+  createFiltersList(appFiltersListElt, state.displayedApp);
+  createFiltersList(ustFiltersListElt, state.displayedUst);
+};
+
+/**
+ * Display the initial filters
+ * @returns {void}
+ */
+const initializeFilters = () => {
+  fillAllFilterLists();
+  ingBtnElt.addEventListener("click", toggleFilterList);
+  appBtnElt.addEventListener("click", toggleFilterList);
+  ustBtnElt.addEventListener("click", toggleFilterList);
+  overlayElt.addEventListener("click", putFiltersToInitialState);
 };
 
 /**
@@ -133,29 +99,15 @@ const toggleFilterList = (evt) => {
 };
 
 /**
- * open the filter list
- * @param   {node}    elt  the element to which the open class is added
- * @param   {string}  buttonId  the id of the button clicked
- * @return  {void}
- */
-const openFilterList = (elt, buttonId) => {
-  closeAllFilterLists();
-  elt.className += " open";
-  const buttonElt = document.getElementById(buttonId);
-  buttonElt.className = "fas fa-chevron-up";
-  overlayElt.style.display = "block";
-};
-
-/**
  * close all filters
  * @return  {void}
  */
 const closeAllFilterLists = () => {
   overlayElt.style.display = "none";
 
-  ingFiltersListElt.classList.remove("open");
-  appFiltersListElt.classList.remove("open");
-  ustFiltersListElt.classList.remove("open");
+  ingFiltersListElt.parentNode.classList.remove("open");
+  appFiltersListElt.parentNode.classList.remove("open");
+  ustFiltersListElt.parentNode.classList.remove("open");
 
   ingBtnElt.className = "fas fa-chevron-down";
   appBtnElt.className = "fas fa-chevron-down";
@@ -176,6 +128,20 @@ const scaleFilterUp = (evt) => {
 };
 
 /**
+ * open the filter list
+ * @param   {node}    elt  the element to which the open class is added
+ * @param   {string}  buttonId  the id of the button clicked
+ * @return  {void}
+ */
+const openFilterList = (elt, buttonId) => {
+  closeAllFilterLists();
+  elt.className += " open";
+  const buttonElt = document.getElementById(buttonId);
+  buttonElt.className = "fas fa-chevron-up";
+  overlayElt.style.display = "block";
+};
+
+/**
  * scale the input filter down
  * @return  {void}
  */
@@ -193,70 +159,4 @@ const putFiltersToInitialState = () => {
   scaleAllFiltersDown();
 };
 
-/**
- * Remove the HTML content of all filter's ul
- * @returns {void}
- */
-const cleanFiltersList = () => {
-  ingFiltersListElt.firstChild.innerHTML = "";
-  appFiltersListElt.firstChild.innerHTML = "";
-  ustFiltersListElt.firstChild.innerHTML = "";
-};
-
-/**
- * Add a given filter to the filter's list
- * @param {string} filterListElt  ing, app or ust
- * @param {string} filter         the filter's content
- */
-const addFilterFromRecipe = (filterListElt, filter) => {
-  if (filterListElt === "ing") {
-    const newFilter = createFilterElt("ing", filter);
-    ingFiltersListElt.firstChild.appendChild(newFilter);
-  }
-  if (filterListElt === "app") {
-    const newFilter = createFilterElt("app", filter);
-    appFiltersListElt.firstChild.appendChild(newFilter);
-  }
-  if (filterListElt === "ust") {
-    const newFilter = createFilterElt("ust", filter);
-    ustFiltersListElt.firstChild.appendChild(newFilter);
-  }
-};
-
-/**
- * Get the list of currently displayed filters
- * @param   {string} type ing, app or ust
- * @returns {array}
- */
-const getVisibleFilters = (type) => {
-  const listNodes = document.querySelectorAll(`#${type}-filter-list li a`);
-  const listContentArray = Array.from(listNodes).map((elt) =>
-    elt.textContent.toLowerCase()
-  );
-  return listContentArray;
-};
-
-const addTagsFilter = () => {
-  const visibleRecipes = document.querySelectorAll("#main-content article");
-  visibleRecipes.forEach((recipe) => {
-    if (
-      recipe.style.display === "block" &&
-      !globalState.recipesFromFilters.includes(parseInt(recipe.id))
-    )
-      recipe.style.display = "none";
-  });
-};
-
-export {
-  initializeFilters,
-  fillFiltersList,
-  toggleFilterList,
-  putFiltersToInitialState,
-  scaleFilterUp,
-  addFilterFromRecipe,
-  cleanFiltersList,
-  getVisibleFilters,
-  createFilterElt,
-  fillFiltersWithInitialData,
-  addTagsFilter,
-};
+export { initializeFilters };
