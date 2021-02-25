@@ -2,6 +2,7 @@ import state from "./globalState";
 import { manageFilters } from "./datalogic";
 import { createGenericElt, normalizeText } from "./utils";
 import { addTagsFilter } from "./filters";
+import { searchRecipes } from "./search";
 
 const labelsElt = document.getElementById("labels");
 const { globalState } = state;
@@ -75,6 +76,10 @@ const removeFilter = (type, name) => {
     createAllLabels();
     manageFilters();
     addTagsFilter();
+    console.log(globalState);
+
+    const searchBarElt = document.getElementById("search-bar");
+    if (searchBarElt.value.length > 2) searchRecipes();
   };
 };
 

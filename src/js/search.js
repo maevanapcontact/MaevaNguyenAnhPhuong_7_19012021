@@ -20,7 +20,7 @@ const manageSearchInput = (evt) => {
   evt.preventDefault();
   const value = evt.target.value;
 
-  if (value.length > 2) searchRecipes(value);
+  if (value.length > 2) searchRecipes();
   else {
     hideAllRecipes();
     fillFiltersWithInitialData();
@@ -32,8 +32,9 @@ const manageSearchInput = (evt) => {
  * @param   {string} val the value of the search input
  * @returns {void}
  */
-const searchRecipes = (val) => {
-  const value = normalizeText(val);
+const searchRecipes = () => {
+  const searchBarElt = document.getElementById("search-bar");
+  const value = normalizeText(searchBarElt.value);
   cleanFiltersList();
 
   recipes.forEach((recipe) => {
@@ -119,4 +120,4 @@ const displayUstensilsFromRecipe = (recipe) => {
   });
 };
 
-export { manageSearchInput };
+export { manageSearchInput, searchRecipes };

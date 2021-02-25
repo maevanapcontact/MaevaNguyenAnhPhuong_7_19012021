@@ -5,9 +5,9 @@ import {
   getAllAppliances,
   getAllUstensils,
 } from "./datalogic";
-import { createGenericElt, createLinkElt } from "./utils";
+import { createGenericElt, createLinkElt, normalizeText } from "./utils";
 import { createAllLabels } from "./labels";
-import { normalizeText } from "./utils";
+import { searchRecipes } from "./search";
 
 const { globalState } = state;
 
@@ -104,6 +104,9 @@ const addFilter = (type, name) => {
     scaleAllFiltersDown();
     manageFilters();
     addTagsFilter();
+
+    const searchBarElt = document.getElementById("search-bar");
+    if (searchBarElt.value.length > 2) searchRecipes();
   };
 };
 
@@ -234,7 +237,14 @@ const getVisibleFilters = (type) => {
 };
 
 const addTagsFilter = () => {
-  // console.log(globalState.recipesFromFilters);
+  const visibleRecipes = document.querySelectorAll("#main-content article");
+  visibleRecipes.forEach((recipe) => {
+    if (
+      recipe.style.display === "block" &&
+      !globalState.recipesFromFilters.includes(parseInt(recipe.id))
+    )
+      recipe.style.display = "none";
+  });
 };
 
 export {
