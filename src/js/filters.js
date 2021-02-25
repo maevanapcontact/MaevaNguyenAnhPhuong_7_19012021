@@ -1,5 +1,7 @@
 import state from "./state";
-import { createGenericElt, createLinkElt } from "./utils";
+import { createGenericElt, createLinkElt, normalizeText } from "./utils";
+
+import { createAllLabels } from "./labels";
 
 /**
  * DOM Variables
@@ -36,8 +38,22 @@ const createFilterElt = (type, name) => {
 const addFilter = (type, name) => {
   return function (evt) {
     evt.preventDefault();
-    console.log(`${type}: ${name}`);
+    const formattedName = normalizeText(name);
+
+    if (type === "ing") {
+      if (!state.ingLabels.includes(formattedName))
+        state.ingLabels.push(formattedName);
+    }
+    if (type === "app") {
+      if (!state.appLabels.includes(formattedName))
+        state.appLabels.push(formattedName);
+    }
+    if (type === "ust") {
+      if (!state.ustLabels.includes(formattedName))
+        state.ustLabels.push(formattedName);
+    }
     putFiltersToInitialState();
+    createAllLabels();
   };
 };
 
