@@ -26,40 +26,40 @@ const ustBtnElt = document.getElementById("ust-btn");
  * Display the initial filters
  * @returns {void}
  */
-const initializeFilters = () => {
-  fillFiltersWithInitialData();
-  ingBtnElt.addEventListener("click", toggleFilterList);
-  appBtnElt.addEventListener("click", toggleFilterList);
-  ustBtnElt.addEventListener("click", toggleFilterList);
-  overlayElt.addEventListener("click", putFiltersToInitialState);
-};
+// const initializeFilters = () => {
+//   fillFiltersWithInitialData();
+//   ingBtnElt.addEventListener("click", toggleFilterList);
+//   appBtnElt.addEventListener("click", toggleFilterList);
+//   ustBtnElt.addEventListener("click", toggleFilterList);
+//   overlayElt.addEventListener("click", putFiltersToInitialState);
+// };
 
 /**
  * Fills the filters with initial data
  * @returns {void}
  */
-const fillFiltersWithInitialData = () => {
-  ingFiltersListElt.innerHTML = "";
-  appFiltersListElt.innerHTML = "";
-  ustFiltersListElt.innerHTML = "";
-  ingFiltersListElt.appendChild(fillFiltersList(getAllIngredients()));
-  appFiltersListElt.appendChild(fillFiltersList(getAllAppliances()));
-  ustFiltersListElt.appendChild(fillFiltersList(getAllUstensils()));
-};
+// const fillFiltersWithInitialData = () => {
+//   ingFiltersListElt.innerHTML = "";
+//   appFiltersListElt.innerHTML = "";
+//   ustFiltersListElt.innerHTML = "";
+//   ingFiltersListElt.appendChild(fillFiltersList(getAllIngredients()));
+//   appFiltersListElt.appendChild(fillFiltersList(getAllAppliances()));
+//   ustFiltersListElt.appendChild(fillFiltersList(getAllUstensils()));
+// };
 
 /**
  * creates a list element with all filters of a type
  * @param   {array} list  list of filters to display
  * @return  {node}
  */
-const fillFiltersList = (list) => {
-  const ulElt = createGenericElt("ul");
-  list.forEach((elt) => {
-    const liElt = createFilterElt(elt.type, elt.name);
-    ulElt.appendChild(liElt);
-  });
-  return ulElt;
-};
+// const fillFiltersList = (list) => {
+//   const ulElt = createGenericElt("ul");
+//   list.forEach((elt) => {
+//     const liElt = createFilterElt(elt.type, elt.name);
+//     ulElt.appendChild(liElt);
+//   });
+//   return ulElt;
+// };
 
 /**
  * Creates a single filter element
@@ -67,14 +67,14 @@ const fillFiltersList = (list) => {
  * @param   {string} name the filter's content
  * @returns {node}
  */
-const createFilterElt = (type, name) => {
-  const liElt = createGenericElt("li");
-  const aElt = createLinkElt("/", name, "filter-tag");
-  liElt.appendChild(aElt);
-  liElt.addEventListener("click", addFilter(type, name));
+// const createFilterElt = (type, name) => {
+//   const liElt = createGenericElt("li");
+//   const aElt = createLinkElt("/", name, "filter-tag");
+//   liElt.appendChild(aElt);
+//   liElt.addEventListener("click", addFilter(type, name));
 
-  return liElt;
-};
+//   return liElt;
+// };
 
 /**
  * add a filter onClick
@@ -115,22 +115,22 @@ const addFilter = (type, name) => {
  * @param   {object}   evt  Browser Event
  * @return  {void}
  */
-const toggleFilterList = (evt) => {
-  evt.preventDefault();
-  const targetId = evt.target.id;
-  if (evt.target.tagName !== "SPAN") return;
+// const toggleFilterList = (evt) => {
+//   evt.preventDefault();
+//   const targetId = evt.target.id;
+//   if (evt.target.tagName !== "SPAN") return;
 
-  let listElt;
-  if (targetId === "ing-btn") listElt = ingFiltersListElt;
-  if (targetId === "app-btn") listElt = appFiltersListElt;
-  if (targetId === "ust-btn") listElt = ustFiltersListElt;
-  if (evt.target.className === "fas fa-chevron-down") {
-    scaleFilterUp(evt);
-  } else {
-    closeAllFilterLists();
-    scaleAllFiltersDown();
-  }
-};
+//   let listElt;
+//   if (targetId === "ing-btn") listElt = ingFiltersListElt;
+//   if (targetId === "app-btn") listElt = appFiltersListElt;
+//   if (targetId === "ust-btn") listElt = ustFiltersListElt;
+//   if (evt.target.className === "fas fa-chevron-down") {
+//     scaleFilterUp(evt);
+//   } else {
+//     closeAllFilterLists();
+//     scaleAllFiltersDown();
+//   }
+// };
 
 /**
  * open the filter list
@@ -138,60 +138,60 @@ const toggleFilterList = (evt) => {
  * @param   {string}  buttonId  the id of the button clicked
  * @return  {void}
  */
-const openFilterList = (elt, buttonId) => {
-  closeAllFilterLists();
-  elt.className += " open";
-  const buttonElt = document.getElementById(buttonId);
-  buttonElt.className = "fas fa-chevron-up";
-  overlayElt.style.display = "block";
-};
+// const openFilterList = (elt, buttonId) => {
+//   closeAllFilterLists();
+//   elt.className += " open";
+//   const buttonElt = document.getElementById(buttonId);
+//   buttonElt.className = "fas fa-chevron-up";
+//   overlayElt.style.display = "block";
+// };
 
 /**
  * close all filters
  * @return  {void}
  */
-const closeAllFilterLists = () => {
-  overlayElt.style.display = "none";
+// const closeAllFilterLists = () => {
+//   overlayElt.style.display = "none";
 
-  ingFiltersListElt.classList.remove("open");
-  appFiltersListElt.classList.remove("open");
-  ustFiltersListElt.classList.remove("open");
+//   ingFiltersListElt.classList.remove("open");
+//   appFiltersListElt.classList.remove("open");
+//   ustFiltersListElt.classList.remove("open");
 
-  ingBtnElt.className = "fas fa-chevron-down";
-  appBtnElt.className = "fas fa-chevron-down";
-  ustBtnElt.className = "fas fa-chevron-down";
-};
+//   ingBtnElt.className = "fas fa-chevron-down";
+//   appBtnElt.className = "fas fa-chevron-down";
+//   ustBtnElt.className = "fas fa-chevron-down";
+// };
 
 /**
  * scale the input filter up
  * @param   {object}   evt  Browser event
  * @return  {void}
  */
-const scaleFilterUp = (evt) => {
-  evt.preventDefault();
-  scaleAllFiltersDown();
-  const parentElt = evt.target.parentNode;
-  parentElt.className += " scaled";
-  openFilterList(parentElt.childNodes[3], parentElt.childNodes[2].id);
-};
+// const scaleFilterUp = (evt) => {
+//   evt.preventDefault();
+//   scaleAllFiltersDown();
+//   const parentElt = evt.target.parentNode;
+//   parentElt.className += " scaled";
+//   openFilterList(parentElt.childNodes[3], parentElt.childNodes[2].id);
+// };
 
 /**
  * scale the input filter down
  * @return  {void}
  */
-const scaleAllFiltersDown = () => {
-  const filtersElts = document.querySelectorAll(".filters-elt");
-  filtersElts.forEach((elt) => elt.classList.remove("scaled"));
-};
+// const scaleAllFiltersDown = () => {
+//   const filtersElts = document.querySelectorAll(".filters-elt");
+//   filtersElts.forEach((elt) => elt.classList.remove("scaled"));
+// };
 
 /**
  * close all filters and scale them down
  * @return  {void}
  */
-const putFiltersToInitialState = () => {
-  closeAllFilterLists();
-  scaleAllFiltersDown();
-};
+// const putFiltersToInitialState = () => {
+//   closeAllFilterLists();
+//   scaleAllFiltersDown();
+// };
 
 /**
  * Remove the HTML content of all filter's ul

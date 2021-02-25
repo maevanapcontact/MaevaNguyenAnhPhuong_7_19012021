@@ -13,16 +13,16 @@ const { globalState } = state;
  * @param   {string}   name  the label's name
  * @return  {node}
  */
-const createLabel = (type, name) => {
-  const elt = createGenericElt("button", `label ${type}`);
-  elt.setAttribute("type", "button");
-  const iconElt = createGenericElt("span", "far fa-times-circle");
-  iconElt.addEventListener("click", removeFilter(type, name));
-  elt.textContent = name;
-  elt.appendChild(iconElt);
+// const createLabel = (type, name) => {
+//   const elt = createGenericElt("button", `label ${type}`);
+//   elt.setAttribute("type", "button");
+//   const iconElt = createGenericElt("span", "far fa-times-circle");
+//   iconElt.addEventListener("click", removeFilter(type, name));
+//   elt.textContent = name;
+//   elt.appendChild(iconElt);
 
-  return elt;
-};
+//   return elt;
+// };
 
 /**
  * create all the labels of a type
@@ -30,25 +30,25 @@ const createLabel = (type, name) => {
  * @param   {string}  type  ing, app or ust
  * @return  {node}
  */
-const createLabels = (labelsList, type) => {
-  const elt = document.createElement("div");
-  labelsList.forEach((label) => {
-    const labelElt = createLabel(type, label);
-    elt.appendChild(labelElt);
-  });
-  return elt;
-};
+// const createLabels = (labelsList, type) => {
+//   const elt = document.createElement("div");
+//   labelsList.forEach((label) => {
+//     const labelElt = createLabel(type, label);
+//     elt.appendChild(labelElt);
+//   });
+//   return elt;
+// };
 
 /**
  * create the labels of all types
  * @return  {void}
  */
-const createAllLabels = () => {
-  labelsElt.innerHTML = "";
-  labelsElt.appendChild(createLabels(globalState.activeIngFilters, "ing"));
-  labelsElt.appendChild(createLabels(globalState.activeAppFilters, "app"));
-  labelsElt.appendChild(createLabels(globalState.activeUstFilters, "ust"));
-};
+// const createAllLabels = () => {
+//   labelsElt.innerHTML = "";
+//   labelsElt.appendChild(createLabels(globalState.activeIngFilters, "ing"));
+//   labelsElt.appendChild(createLabels(globalState.activeAppFilters, "app"));
+//   labelsElt.appendChild(createLabels(globalState.activeUstFilters, "ust"));
+// };
 
 /**
  * create all the labels of a type
