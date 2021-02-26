@@ -72,7 +72,7 @@ const initializeRecipes = () => {
   mainContentElt.innerHTML = "";
   data.recipes.forEach((recipe) => {
     const recipeElt = createRecipeElement(recipe);
-    recipeElt.style.display = "none";
+    recipeElt.style.display = "block";
     mainContentElt.appendChild(recipeElt);
   });
 };

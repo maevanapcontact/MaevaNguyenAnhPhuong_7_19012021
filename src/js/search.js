@@ -50,7 +50,7 @@ const searchByInput = () => {
   } else {
     data.recipes.forEach((recipe) => {
       const recipeToDisplay = document.getElementById(recipe.id);
-      recipeToDisplay.style.display = "none";
+      recipeToDisplay.style.display = "block";
     });
   }
 };
@@ -178,6 +178,25 @@ const displayUstensilsFromRecipe = (recipe) => {
 };
 
 /**
+ * Display "no result" when no recipe displayed
+ * @returns {void}
+ */
+const checkSearchResults = () => {
+  const allRecipes = document.querySelectorAll("#main-content article");
+  const mainContentElt = document.getElementById("result");
+  const hiddenRecipes = Array.from(allRecipes).filter(
+    (elt) => elt.style.display === "none"
+  );
+
+  if (hiddenRecipes.length === 50) {
+    mainContentElt.textContent =
+      "Aucune recette ne correspond à votre critère…";
+  } else {
+    mainContentElt.textContent = "";
+  }
+};
+
+/**
  * All search steps
  * @returns {void}
  */
@@ -185,6 +204,7 @@ const completeSearch = () => {
   searchByInput();
   searchByTag();
   displayRemainingTags();
+  checkSearchResults();
 };
 
 export { manageSearchInput, completeSearch };
