@@ -3,9 +3,16 @@ import state from "./state";
 import {
   getIngredientsStringFromRecipe,
   getFullRecipesFromIds,
+  getAllRecipeIds,
 } from "./datalogic";
 import { normalizeText } from "./utils";
-import { getVisibleFilters, createFilterElt, clearAllFilters } from "./filters";
+import {
+  getVisibleFilters,
+  createFilterElt,
+  clearAllFilters,
+  getAllFiltersLength,
+} from "./filters";
+import { displayAllRecipes } from "./recipes";
 
 /**
  * Manage the conditions for search algo
@@ -18,6 +25,10 @@ const manageSearchInput = (evt) => {
   completeSearch();
 };
 
+/**
+ * Search recipes from search input
+ * @returns {void}
+ */
 const searchByInput = () => {
   const value = state.currentSearch;
   state.displayedRecipes = [];
@@ -44,6 +55,10 @@ const searchByInput = () => {
   }
 };
 
+/**
+ * Search recipes from filters
+ * @returns {void}
+ */
 const searchByTag = () => {
   const {
     ingLabels,
@@ -53,9 +68,17 @@ const searchByTag = () => {
     ingObj,
     appObj,
     ustObj,
+    currentSearch,
   } = state;
 
-  displayedRecipes.forEach((idRecipe) => {
+  let arrayOfRecipes = displayedRecipes;
+
+  if (currentSearch.length < 3 && getAllFiltersLength() > 0) {
+    arrayOfRecipes = getAllRecipeIds();
+    displayAllRecipes();
+  }
+
+  arrayOfRecipes.forEach((idRecipe) => {
     const displayedRecipe = document.getElementById(idRecipe);
 
     ingLabels.forEach((ing) => {
@@ -75,15 +98,25 @@ const searchByTag = () => {
   });
 };
 
+/**
+ * Display the filters from the displayed recipes
+ * @returns {void}
+ */
 const displayRemainingTags = () => {
-  const allRecipes = document.querySelectorAll("#main-content article");
-  const visileRecipesIds = Array.from(allRecipes)
-    .filter((elt) => elt.style.display === "block")
-    .map((elt) => parseInt(elt.id));
-  const visibleRecipes = getFullRecipesFromIds(visileRecipesIds);
+  let recipesToConsider = [];
+
+  if (state.currentSearch.length < 3 && getAllFiltersLength() === 0) {
+    recipesToConsider = data.recipes;
+  } else {
+    const allRecipes = document.querySelectorAll("#main-content article");
+    const visileRecipesIds = Array.from(allRecipes)
+      .filter((elt) => elt.style.display === "block")
+      .map((elt) => parseInt(elt.id));
+    recipesToConsider = getFullRecipesFromIds(visileRecipesIds);
+  }
 
   clearAllFilters();
-  visibleRecipes.forEach((recipe) => displayFiltersFromRecipes(recipe));
+  recipesToConsider.forEach((recipe) => displayFiltersFromRecipes(recipe));
 };
 
 /**
@@ -144,11 +177,14 @@ const displayUstensilsFromRecipe = (recipe) => {
   });
 };
 
+/**
+ * All search steps
+ * @returns {void}
+ */
 const completeSearch = () => {
   searchByInput();
   searchByTag();
   displayRemainingTags();
-  console.log(state);
 };
 
 export { manageSearchInput, completeSearch };

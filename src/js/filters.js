@@ -14,6 +14,9 @@ const ustFiltersListElt = document.getElementById("ust-filter-list");
 const ingBtnElt = document.getElementById("ing-btn");
 const appBtnElt = document.getElementById("app-btn");
 const ustBtnElt = document.getElementById("ust-btn");
+const ingInputElt = document.getElementById("ing-input");
+const appInputElt = document.getElementById("app-input");
+const ustInputElt = document.getElementById("ust-input");
 
 /**
  * Creates a single filter element
@@ -92,6 +95,14 @@ const initializeFilters = () => {
   appBtnElt.addEventListener("click", toggleFilterList);
   ustBtnElt.addEventListener("click", toggleFilterList);
   overlayElt.addEventListener("click", putFiltersToInitialState);
+
+  ingInputElt.addEventListener("focus", scaleFilterUp);
+  appInputElt.addEventListener("focus", scaleFilterUp);
+  ustInputElt.addEventListener("focus", scaleFilterUp);
+
+  ingInputElt.addEventListener("input", manageCompletion);
+  appInputElt.addEventListener("input", manageCompletion);
+  ustInputElt.addEventListener("input", manageCompletion);
 };
 
 /**
@@ -130,6 +141,9 @@ const closeAllFilterLists = () => {
   ingBtnElt.className = "fas fa-chevron-down";
   appBtnElt.className = "fas fa-chevron-down";
   ustBtnElt.className = "fas fa-chevron-down";
+
+  removeFilterInputsValue();
+  resetTagsDisplay();
 };
 
 /**
@@ -190,10 +204,65 @@ const getVisibleFilters = (type) => {
   return listContentArray;
 };
 
+/**
+ * Clear the DOM filters
+ * @returns {void}
+ */
 const clearAllFilters = () => {
   ingFiltersListElt.innerHTML = "";
   appFiltersListElt.innerHTML = "";
   ustFiltersListElt.innerHTML = "";
+};
+
+/**
+ * Get the number of filters added (ing + app + ust)
+ * @returns {number}
+ */
+const getAllFiltersLength = () => {
+  const fullTagArray = state.ingLabels
+    .concat(state.appLabels)
+    .concat(state.ustLabels);
+  return fullTagArray.length;
+};
+
+/**
+ * Clear value in filters inputs
+ * @returns {void}
+ */
+const removeFilterInputsValue = () => {
+  ingInputElt.value = "";
+  appInputElt.value = "";
+  ustInputElt.value = "";
+};
+
+/**
+ * autocompletion when typinh in filter's inputs
+ * @returns {void}
+ */
+const manageCompletion = (evt) => {
+  const idTarget = evt.target.parentNode.id;
+  const formattedValue = normalizeText(evt.target.value);
+  const allTags = document.querySelectorAll(`#${idTarget} li a`);
+
+  allTags.forEach((tag) => {
+    if (!tag.textContent.includes(formattedValue))
+      tag.parentNode.style.display = "none";
+    else tag.parentNode.style.display = "block";
+  });
+};
+
+/**
+ * Display all tags in the DOM
+ * @returns {void}
+ */
+const resetTagsDisplay = () => {
+  const allIngTags = document.querySelectorAll(`#ing-filter-list li`);
+  const allAppTags = document.querySelectorAll(`#app-filter-list li`);
+  const allUstTags = document.querySelectorAll(`#ust-filter-list li`);
+
+  allIngTags.forEach((ing) => (ing.style.display = "block"));
+  allAppTags.forEach((app) => (app.style.display = "block"));
+  allUstTags.forEach((ust) => (ust.style.display = "block"));
 };
 
 export {
@@ -201,4 +270,5 @@ export {
   getVisibleFilters,
   createFilterElt,
   clearAllFilters,
+  getAllFiltersLength,
 };

@@ -77,4 +77,15 @@ const initializeRecipes = () => {
   });
 };
 
-export { initializeRecipes };
+/**
+ * Display all the recipes in the DOM
+ * @returns {void}
+ */
+const displayAllRecipes = () => {
+  data.recipes.forEach((recipe) => {
+    const recipeToDisplay = document.getElementById(recipe.id);
+    recipeToDisplay.style.display = "block";
+  });
+};
+
+export { initializeRecipes, displayAllRecipes };

@@ -1,4 +1,3 @@
-import state from "./state";
 import { initializeState } from "./datalogic";
 import { initializeFilters } from "./filters";
 import { initializeRecipes } from "./recipes";
@@ -6,12 +5,15 @@ import { manageSearchInput } from "./search";
 
 import "../style/main.scss";
 
-const searchBarElt = document.getElementById("search-bar");
-
+/**
+ * Initialize the app
+ */
 initializeState();
 initializeFilters();
 initializeRecipes();
 
+/**
+ * Add listener to the search bar
+ */
+const searchBarElt = document.getElementById("search-bar");
 searchBarElt.addEventListener("input", manageSearchInput);
-
-console.log(state);

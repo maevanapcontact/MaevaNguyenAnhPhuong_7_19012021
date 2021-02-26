@@ -149,6 +149,10 @@ const getUstensilsObject = () => {
   return ustensilsObject;
 };
 
+/**
+ * Get full recipe data from Ids
+ * @return  {array}
+ */
 const getFullRecipesFromIds = (idsArray) => {
   return data.recipes.filter((recipe) => idsArray.includes(recipe.id));
 };
@@ -157,4 +161,5 @@ export {
   initializeState,
   getIngredientsStringFromRecipe,
   getFullRecipesFromIds,
+  getAllRecipeIds,
 };
