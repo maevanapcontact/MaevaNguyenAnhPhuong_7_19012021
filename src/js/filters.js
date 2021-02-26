@@ -1,4 +1,5 @@
 import state from "./state";
+import { completeSearch } from "./search";
 import { createGenericElt, createLinkElt, normalizeText } from "./utils";
 
 import { createAllLabels } from "./labels";
@@ -54,6 +55,7 @@ const addFilter = (type, name) => {
     }
     putFiltersToInitialState();
     createAllLabels();
+    completeSearch();
   };
 };
 
@@ -175,4 +177,28 @@ const putFiltersToInitialState = () => {
   scaleAllFiltersDown();
 };
 
-export { initializeFilters };
+/**
+ * Get the list of currently displayed filters
+ * @param   {string} type ing, app or ust
+ * @returns {array}
+ */
+const getVisibleFilters = (type) => {
+  const listNodes = document.querySelectorAll(`#${type}-filter-list li a`);
+  const listContentArray = Array.from(listNodes).map((elt) =>
+    elt.textContent.toLowerCase()
+  );
+  return listContentArray;
+};
+
+const clearAllFilters = () => {
+  ingFiltersListElt.innerHTML = "";
+  appFiltersListElt.innerHTML = "";
+  ustFiltersListElt.innerHTML = "";
+};
+
+export {
+  initializeFilters,
+  getVisibleFilters,
+  createFilterElt,
+  clearAllFilters,
+};

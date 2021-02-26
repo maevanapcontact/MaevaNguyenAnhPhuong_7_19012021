@@ -61,59 +61,59 @@ const { globalState } = state;
  * @param   {array}  tagList  the array of filters
  * @return  {object}
  */
-const createTagObject = (tagList) => {
-  let tagObj = {};
-  tagList.forEach((tag) => (tagObj[normalizeText(tag.name)] = []));
+// const createTagObject = (tagList) => {
+//   let tagObj = {};
+//   tagList.forEach((tag) => (tagObj[normalizeText(tag.name)] = []));
 
-  return tagObj;
-};
+//   return tagObj;
+// };
 
 /**
  * Get an object with all ingredient names
  * @return  {object}
  */
-const getIngredientsObject = () => {
-  let ingredientsObject = createTagObject(getAllIngredients());
-  data.recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((elt) => {
-      const objKey = normalizeText(elt.ingredient);
-      ingredientsObject[objKey].push(recipe.id);
-    });
-  });
-  return ingredientsObject;
-};
+// const getIngredientsObject = () => {
+//   let ingredientsObject = createTagObject(getAllIngredients());
+//   data.recipes.forEach((recipe) => {
+//     recipe.ingredients.forEach((elt) => {
+//       const objKey = normalizeText(elt.ingredient);
+//       ingredientsObject[objKey].push(recipe.id);
+//     });
+//   });
+//   return ingredientsObject;
+// };
 
 /**
  * Get an object with all appliance names
  * @return  {object}
  */
-const getAppliancesObject = () => {
-  let appliancesObject = createTagObject(getAllAppliances());
+// const getAppliancesObject = () => {
+//   let appliancesObject = createTagObject(getAllAppliances());
 
-  data.recipes.forEach((recipe) => {
-    const objKey = normalizeText(recipe.appliance);
-    appliancesObject[objKey].push(recipe.id);
-  });
+//   data.recipes.forEach((recipe) => {
+//     const objKey = normalizeText(recipe.appliance);
+//     appliancesObject[objKey].push(recipe.id);
+//   });
 
-  return appliancesObject;
-};
+//   return appliancesObject;
+// };
 
 /**
  * Get an object with all ustensil names
  * @return  {object}
  */
-const getUstensilsObject = () => {
-  let ustensilsObject = createTagObject(getAllUstensils());
+// const getUstensilsObject = () => {
+//   let ustensilsObject = createTagObject(getAllUstensils());
 
-  data.recipes.forEach((recipe) => {
-    recipe.ustensils.forEach((elt) => {
-      const objKey = normalizeText(elt);
-      ustensilsObject[objKey].push(recipe.id);
-    });
-  });
+//   data.recipes.forEach((recipe) => {
+//     recipe.ustensils.forEach((elt) => {
+//       const objKey = normalizeText(elt);
+//       ustensilsObject[objKey].push(recipe.id);
+//     });
+//   });
 
-  return ustensilsObject;
-};
+//   return ustensilsObject;
+// };
 
 /**
  * Add all recipes ids in the global state

@@ -1,4 +1,5 @@
 import state from "./state";
+import { completeSearch } from "./search";
 import { createGenericElt, normalizeText } from "./utils";
 
 /**
@@ -67,6 +68,7 @@ const removeFilter = (type, name) => {
     if (type === "ust")
       state.ustLabels = state.ustLabels.filter((elt) => formattedName !== elt);
     createAllLabels();
+    completeSearch();
   };
 };
 

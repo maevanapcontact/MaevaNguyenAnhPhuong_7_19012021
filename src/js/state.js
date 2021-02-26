@@ -7,6 +7,9 @@ let state = {
   appLabels: [],
   ustLabels: [],
   currentSearch: "",
+  ingObj: {},
+  appObj: {},
+  ustObj: {},
 };
 
 export default state;
