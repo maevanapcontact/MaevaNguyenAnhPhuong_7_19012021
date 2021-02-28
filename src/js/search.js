@@ -13,9 +13,9 @@ import {
   getAllFiltersLength,
 } from "./filters";
 import {
-  displayAllRecipes,
   createRecipeElement,
   removeRecipeById,
+  createAllRecipes,
 } from "./recipes";
 
 /**
@@ -98,7 +98,7 @@ const searchByTag = () => {
 
   if (currentSearch.length < 3 && getAllFiltersLength() > 0) {
     arrayOfRecipes = getAllRecipeIds();
-    displayAllRecipes();
+    createAllRecipes();
   }
 
   arrayOfRecipes.forEach((idRecipe) => {
@@ -207,13 +207,18 @@ const displayUstensilsFromRecipe = (recipe) => {
 const checkSearchResults = () => {
   const allRecipes = document.querySelectorAll("#main-content article");
   const mainContentElt = document.getElementById("result");
+
   const hiddenRecipes = Array.from(allRecipes).filter(
     (elt) => elt.style.display === "none"
   );
 
-  if (hiddenRecipes.length === 50) {
-    mainContentElt.textContent =
-      "Aucune recette ne correspond à votre critère…";
+  if (allRecipes.length === 0 || hiddenRecipes.length === allRecipes.length) {
+    if (state.currentSearch.length < 3 && getAllFiltersLength() === 0) {
+      mainContentElt.textContent = "";
+    } else {
+      mainContentElt.textContent =
+        "Aucune recette ne correspond à votre critère…";
+    }
   } else {
     mainContentElt.textContent = "";
   }
@@ -225,9 +230,9 @@ const checkSearchResults = () => {
  */
 const completeSearch = () => {
   searchByInput();
-  // searchByTag();
-  // displayRemainingTags();
-  // checkSearchResults();
+  searchByTag();
+  displayRemainingTags();
+  checkSearchResults();
 };
 
 export { manageSearchInput, completeSearch };

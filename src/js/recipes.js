@@ -1,5 +1,4 @@
 import data from "./data";
-import state from "./state";
 import { createGenericElt, createLinkElt } from "./utils";
 
 /**
@@ -44,6 +43,7 @@ const createRecipeElement = (recipe) => {
   aElt.appendChild(imgElt);
   aElt.appendChild(dataElt);
   elt.appendChild(aElt);
+  elt.style.display = "block";
 
   return elt;
 };
@@ -65,17 +65,17 @@ const createIngredient = (ingredient) => {
 };
 
 /**
- * Build all recipes and hide them
+ * Create all recipes and insert them into the DOM
  * @returns {void}
  */
-// const initializeRecipes = () => {
-//   mainContentElt.innerHTML = "";
-//   data.recipes.forEach((recipe) => {
-//     const recipeElt = createRecipeElement(recipe);
-//     recipeElt.style.display = "block";
-//     mainContentElt.appendChild(recipeElt);
-//   });
-// };
+const createAllRecipes = () => {
+  mainContentElt.innerHTML = "";
+  data.recipes.forEach((recipe) => {
+    const recipeElt = createRecipeElement(recipe);
+    recipeElt.style.display = "block";
+    mainContentElt.appendChild(recipeElt);
+  });
+};
 
 /**
  * Display all the recipes in the DOM
@@ -88,9 +88,18 @@ const displayAllRecipes = () => {
   });
 };
 
+/**
+ * Check if recipe is already in the DOM and remove it
+ * @returns {void}
+ */
 const removeRecipeById = (recipeId) => {
   if (document.getElementById(recipeId))
     document.getElementById(recipeId).remove();
 };
 
-export { displayAllRecipes, createRecipeElement, removeRecipeById };
+export {
+  displayAllRecipes,
+  createRecipeElement,
+  removeRecipeById,
+  createAllRecipes,
+};
