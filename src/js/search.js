@@ -39,7 +39,8 @@ const searchByInput = () => {
   state.displayedRecipes = [];
 
   if (value.length > 2) {
-    let recipesToCheck = [];
+    let recipesFromTitle = [];
+    let recipesFromDescription = [];
 
     data.recipes.forEach((recipe) => {
       if (normalizeText(recipe.name).includes(value)) {
@@ -47,27 +48,26 @@ const searchByInput = () => {
         mainContentElt.appendChild(createRecipeElement(recipe));
         state.displayedRecipes.push(recipe.id);
       } else {
-        recipesToCheck.push(recipe);
+        recipesFromTitle.push(recipe);
         removeRecipeById(recipe.id);
       }
     });
 
-    recipesToCheck.forEach((recipe, index) => {
+    recipesFromTitle.forEach((recipe) => {
       if (normalizeText(recipe.description).includes(value)) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
-        recipesToCheck.splice(index, 1);
         state.displayedRecipes.push(recipe.id);
       } else {
+        recipesFromDescription.push(recipe);
         removeRecipeById(recipe.id);
       }
     });
 
-    recipesToCheck.forEach((recipe, index) => {
+    recipesFromDescription.forEach((recipe) => {
       if (getIngredientsStringFromRecipe(recipe).includes(value)) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
-        recipesToCheck.splice(index, 1);
         state.displayedRecipes.push(recipe.id);
       } else {
         removeRecipeById(recipe.id);
