@@ -68,14 +68,14 @@ const createIngredient = (ingredient) => {
  * Build all recipes and hide them
  * @returns {void}
  */
-const initializeRecipes = () => {
-  mainContentElt.innerHTML = "";
-  data.recipes.forEach((recipe) => {
-    const recipeElt = createRecipeElement(recipe);
-    recipeElt.style.display = "block";
-    mainContentElt.appendChild(recipeElt);
-  });
-};
+// const initializeRecipes = () => {
+//   mainContentElt.innerHTML = "";
+//   data.recipes.forEach((recipe) => {
+//     const recipeElt = createRecipeElement(recipe);
+//     recipeElt.style.display = "block";
+//     mainContentElt.appendChild(recipeElt);
+//   });
+// };
 
 /**
  * Display all the recipes in the DOM
@@ -88,4 +88,9 @@ const displayAllRecipes = () => {
   });
 };
 
-export { initializeRecipes, displayAllRecipes };
+const removeRecipeById = (recipeId) => {
+  if (document.getElementById(recipeId))
+    document.getElementById(recipeId).remove();
+};
+
+export { displayAllRecipes, createRecipeElement, removeRecipeById };

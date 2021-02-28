@@ -1,6 +1,5 @@
 import { initializeState } from "./datalogic";
 import { initializeFilters } from "./filters";
-import { initializeRecipes } from "./recipes";
 import { manageSearchInput } from "./search";
 
 import "../style/main.scss";
@@ -10,7 +9,6 @@ import "../style/main.scss";
  */
 initializeState();
 initializeFilters();
-initializeRecipes();
 
 /**
  * Add listener to the search bar

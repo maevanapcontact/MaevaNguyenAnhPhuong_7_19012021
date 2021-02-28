@@ -12,7 +12,11 @@ import {
   clearAllFilters,
   getAllFiltersLength,
 } from "./filters";
-import { displayAllRecipes } from "./recipes";
+import {
+  displayAllRecipes,
+  createRecipeElement,
+  removeRecipeById,
+} from "./recipes";
 
 /**
  * Manage the conditions for search algo
@@ -30,28 +34,47 @@ const manageSearchInput = (evt) => {
  * @returns {void}
  */
 const searchByInput = () => {
+  const mainContentElt = document.getElementById("main-content");
   const value = state.currentSearch;
   state.displayedRecipes = [];
 
   if (value.length > 2) {
+    let recipesToCheck = [];
+
     data.recipes.forEach((recipe) => {
-      const recipeToDisplay = document.getElementById(recipe.id);
-      if (
-        normalizeText(recipe.name).includes(value) ||
-        normalizeText(recipe.description).includes(value) ||
-        getIngredientsStringFromRecipe(recipe).includes(value)
-      ) {
-        recipeToDisplay.style.display = "block";
+      if (normalizeText(recipe.name).includes(value)) {
+        removeRecipeById(recipe.id);
+        mainContentElt.appendChild(createRecipeElement(recipe));
         state.displayedRecipes.push(recipe.id);
       } else {
-        recipeToDisplay.style.display = "none";
+        recipesToCheck.push(recipe);
+        removeRecipeById(recipe.id);
+      }
+    });
+
+    recipesToCheck.forEach((recipe, index) => {
+      if (normalizeText(recipe.description).includes(value)) {
+        removeRecipeById(recipe.id);
+        mainContentElt.appendChild(createRecipeElement(recipe));
+        state.displayedRecipes.push(recipe.id);
+        recipesToCheck.splice(index, 1);
+      } else {
+        removeRecipeById(recipe.id);
+      }
+    });
+
+    recipesToCheck.forEach((recipe, index) => {
+      if (getIngredientsStringFromRecipe(recipe).includes(value)) {
+        removeRecipeById(recipe.id);
+        mainContentElt.appendChild(createRecipeElement(recipe));
+        state.displayedRecipes.push(recipe.id);
+        recipesToCheck.splice(index, 1);
+      } else {
+        removeRecipeById(recipe.id);
       }
     });
   } else {
-    data.recipes.forEach((recipe) => {
-      const recipeToDisplay = document.getElementById(recipe.id);
-      recipeToDisplay.style.display = "block";
-    });
+    mainContentElt.innerHTML = "";
   }
 };
 
@@ -202,9 +225,9 @@ const checkSearchResults = () => {
  */
 const completeSearch = () => {
   searchByInput();
-  searchByTag();
-  displayRemainingTags();
-  checkSearchResults();
+  // searchByTag();
+  // displayRemainingTags();
+  // checkSearchResults();
 };
 
 export { manageSearchInput, completeSearch };
