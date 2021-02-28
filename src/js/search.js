@@ -56,8 +56,8 @@ const searchByInput = () => {
       if (normalizeText(recipe.description).includes(value)) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
-        state.displayedRecipes.push(recipe.id);
         recipesToCheck.splice(index, 1);
+        state.displayedRecipes.push(recipe.id);
       } else {
         removeRecipeById(recipe.id);
       }
@@ -67,8 +67,8 @@ const searchByInput = () => {
       if (getIngredientsStringFromRecipe(recipe).includes(value)) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
-        state.displayedRecipes.push(recipe.id);
         recipesToCheck.splice(index, 1);
+        state.displayedRecipes.push(recipe.id);
       } else {
         removeRecipeById(recipe.id);
       }
