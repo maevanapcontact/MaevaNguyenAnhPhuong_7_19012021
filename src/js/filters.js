@@ -112,13 +112,8 @@ const initializeFilters = () => {
  */
 const toggleFilterList = (evt) => {
   evt.preventDefault();
-  const targetId = evt.target.id;
   if (evt.target.tagName !== "SPAN") return;
 
-  let listElt;
-  if (targetId === "ing-btn") listElt = ingFiltersListElt;
-  if (targetId === "app-btn") listElt = appFiltersListElt;
-  if (targetId === "ust-btn") listElt = ustFiltersListElt;
   if (evt.target.className === "fas fa-chevron-down") {
     scaleFilterUp(evt);
   } else {

@@ -1,5 +1,4 @@
 import data from "./data";
-import state from "./state";
 import { createGenericElt, createLinkElt } from "./utils";
 
 /**
