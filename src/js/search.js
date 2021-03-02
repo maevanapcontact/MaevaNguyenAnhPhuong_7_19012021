@@ -37,9 +37,9 @@ const searchByInput = () => {
     data.recipes.forEach((recipe) => {
       const recipeToDisplay = document.getElementById(recipe.id);
       if (
-        normalizeText(recipe.name).includes(value) ||
-        normalizeText(recipe.description).includes(value) ||
-        getIngredientsStringFromRecipe(recipe).includes(value)
+        normalizeText(recipe.name).includes(normalizeText(value)) ||
+        normalizeText(recipe.description).includes(normalizeText(value)) ||
+        getIngredientsStringFromRecipe(recipe).includes(normalizeText(value))
       ) {
         recipeToDisplay.style.display = "block";
         state.displayedRecipes.push(recipe.id);
