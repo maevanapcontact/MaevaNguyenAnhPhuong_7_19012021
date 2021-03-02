@@ -43,7 +43,7 @@ const searchByInput = () => {
     let recipesFromDescription = [];
 
     data.recipes.forEach((recipe) => {
-      if (normalizeText(recipe.name).includes(value)) {
+      if (normalizeText(recipe.name).includes(normalizeText(value))) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
         state.displayedRecipes.push(recipe.id);
@@ -54,7 +54,7 @@ const searchByInput = () => {
     });
 
     recipesFromTitle.forEach((recipe) => {
-      if (normalizeText(recipe.description).includes(value)) {
+      if (normalizeText(recipe.description).includes(normalizeText(value))) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
         state.displayedRecipes.push(recipe.id);
@@ -65,7 +65,9 @@ const searchByInput = () => {
     });
 
     recipesFromDescription.forEach((recipe) => {
-      if (getIngredientsStringFromRecipe(recipe).includes(value)) {
+      if (
+        getIngredientsStringFromRecipe(recipe).includes(normalizeText(value))
+      ) {
         removeRecipeById(recipe.id);
         mainContentElt.appendChild(createRecipeElement(recipe));
         state.displayedRecipes.push(recipe.id);
